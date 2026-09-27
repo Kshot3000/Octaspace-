@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RFC-001: OCTA on Base + Fiat On/Off Ramps — OctaSpace Hub</title>
+<meta name="description" content="Community RFC: a concrete, buildable spec for bringing OCTA to Base and adding fiat on/off ramps to the OctaSpace ecosystem. Research, design options, and a phased plan.">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  .rfc-meta{display:flex;flex-wrap:wrap;gap:10px;margin:18px 0 0}
+  .pill{font-size:.78rem;font-weight:700;padding:5px 14px;border-radius:999px;border:1px solid var(--line);color:var(--muted)}
+  .pill.draft{background:rgba(251,191,36,.12);border-color:rgba(251,191,36,.4);color:#fbbf24}
+  .pill.num{background:rgba(255,122,26,.12);border-color:rgba(255,122,26,.4);color:#ff9a3d}
+  .toc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px 24px;margin:26px 0}
+  .toc ol{padding-left:20px;display:flex;flex-direction:column;gap:6px;font-size:.92rem}
+  .toc a{color:var(--txt);text-decoration:none}
+  .toc a:hover{color:#ff9a3d}
+  .warn{background:rgba(248,113,113,.08);border:1px solid rgba(248,113,113,.4);border-radius:var(--radius);padding:18px 22px;margin:20px 0}
+  .warn strong{color:#f87171}
+  .warn code{font-size:.8rem;word-break:break-all}
+  .ok{background:rgba(52,211,153,.07);border:1px solid rgba(52,211,153,.35);border-radius:var(--radius);padding:18px 22px;margin:20px 0}
+  .ok strong{color:#34d399}
+  .phase{border-left:3px solid #ff7a1a;padding:4px 0 4px 20px;margin:22px 0}
+  .phase h4{margin:0 0 6px;font-size:1.02rem}
+  .phase .who{font-size:.8rem;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:700}
+  .rfc h3{margin-top:34px}
+  .rfc p,.rfc li{color:#c9c9d8}
+  .rfc li{margin-bottom:8px}
+  .rfc ul{padding-left:22px}
+  .q{border:1px solid var(--line);border-radius:var(--radius);padding:16px 20px;margin:12px 0;background:var(--card)}
+  .q strong{color:var(--txt)}
+  .addr{font-family:ui-monospace,monospace;font-size:.82rem;word-break:break-all;color:#f87171}
+</style>
+</head>
+<body>
+<nav><div class="wrap nav-in">
+  <a class="brand" href="index.html"><span class="dot"></span>OctaSpace Hub</a>
+  <div class="nav-links">
+    <a data-page="index" href="index.html">Mission</a>
+    <a data-page="compare" href="compare.html">vs Vast.ai &amp; Salad</a>
+    <a data-page="earn" href="earn.html">Earn as Provider</a>
+    <a data-page="build" href="build.html">Build</a>
+    <a data-page="rfc" href="rfc-base-fiat.html">RFC: Base + Fiat</a>
+    <a class="cta" href="https://octa.space" target="_blank" rel="noopener">octa.space ↗</a>
+  </div>
+</div></nav>
+
+<div class="wrap rfc">
+
+<header class="hero" style="padding-bottom:10px"><div class="wrap" style="padding:0">
+  <span class="kicker">Community RFC · open for comment</span>
+  <h1>RFC-001: <span class="grad">OCTA on Base</span> + fiat on/off&nbsp;ramps</h1>
+  <p class="lead">A concrete, buildable spec for bringing OCTA to Base and giving everyday users a way to buy in with a credit card — researched from public sources, with honest trade-offs and a phased plan the team can actually execute.</p>
+  <div class="rfc-meta">
+    <span class="pill num">RFC-001</span>
+    <span class="pill draft">Status: DRAFT v0.1</span>
+    <span class="pill">2026-09-27</span>
+    <span class="pill">Author: community (@kshot9000)</span>
+    <span class="pill">Seeking: OctaSpace team feedback</span>
+  </div>
+</div></header>
+
+<div class="toc">
+  <strong style="color:var(--txt)">Contents</strong>
+  <ol>
+    <li><a href="#tldr">TL;DR</a></li>
+    <li><a href="#status">Status quo — what exists today (researched 2026-09-27)</a></li>
+    <li><a href="#why">Why Base, and why fiat ramps</a></li>
+    <li><a href="#base">Part A — OCTA on Base: design options</a></li>
+    <li><a href="#scam">Scam-token warning (read this before buying "OCTA" on Base)</a></li>
+    <li><a href="#fiat">Part B — Fiat on/off ramp: provider comparison &amp; phased plan</a></li>
+    <li><a href="#sdk">Part C — SDK support</a></li>
+    <li><a href="#security">Security &amp; compliance notes</a></li>
+    <li><a href="#questions">Open questions for the OctaSpace team</a></li>
+    <li><a href="#changelog">Changelog</a></li>
+  </ol>
+</div>
+
+<section id="tldr">
+  <div class="sec-head"><h2>TL;DR</h2></div>
+  <div class="ok">
+    <strong>The proposal, in one paragraph.</strong>
+    <p style="margin:8px 0 0">OctaSpace should ship an <strong style="color:var(--txt)">official, verified OCTA token on Base</strong> (recommended: LayerZero OFT standard or a canonical lock-and-mint bridge the team controls), publish a <strong style="color:var(--txt)">canonical token-list JSON</strong> so wallets and dApps resolve the real contract, and add <strong style="color:var(--txt)">fiat on/off ramps in phases</strong> — starting with a self-serve ramp widget for USDC on Base (no team permission needed to prototype), then listing OCTA as a buyable asset with a ramp provider once the team completes KYB. The community can build the RFC, the demo widget, the Base SDK scaffold, and the scam-token warning list unilaterally; only the team can deploy the canonical contract, sign commercial ramp agreements, and handle licensing.</p>
+  </div>
+</section>
+
+<section id="status">
+  <div class="sec-head">
+    <h2>Status quo — what exists today</h2>
+    <p>Researched 2026-09-27 from OctaSpace's blog, docs, X, GitHub org, and third-party trackers. Unverified items are labeled.</p>
+  </div>
+  <h3>OCTA on Base</h3>
+  <ul>
+    <li><strong style="color:var(--txt)">No official OCTA token exists on Base.</strong> No Base deployment is mentioned on the OctaSpace blog, docs, X posts, or GitHub org. The whitepaper describes two networks only: the PoW L1 (native OCTA) and the internal PoA L2 used for billing.</li>
+    <li>Official OCTA representations today: the <strong style="color:var(--txt)">native coin on the OctaSpace L1</strong>, and <strong style="color:var(--txt)">wOCTA (ERC-20) on Ethereum mainnet</strong> with a Uniswap V4 pool (per third-party listings).</li>
+    <li>The official SDKs (JS, Python, Go, Ruby) are pure REST API clients — <strong style="color:var(--txt)">zero EVM/Base references</strong>: no chain IDs, no bridge code.</li>
+    <li>What <em>does</em> exist on Base under the OCTA name: <strong style="color:var(--txt)">unofficial copycats</strong> (details in <a href="#scam">the warning section</a>). Treat any "OCTA on Base" token you find today as guilty until proven innocent.</li>
+  </ul>
+  <h3>Fiat on/off ramp</h3>
+  <ul>
+    <li><strong style="color:var(--txt)">No fiat on-ramp or off-ramp product exists, and none is announced.</strong> No Transak / MoonPay / Banxa integration appears in any official channel.</li>
+    <li><strong style="color:var(--txt)">Zebec partnership (July 29, 2025)</strong> — the only official fiat-adjacent integration: Zebec integrated the OctaSpace chain into its Silver &amp; Carbon Mastercard debit cards, letting holders load and spend OCTA at Mastercard merchants; a co-branded "Zebec Black x OCTA" card was described as in development. Scope note: this is <strong style="color:var(--txt)">spend-only</strong> — you cannot buy OCTA with fiat through it, and it is not a bank-withdrawal rail. Whether the co-branded card shipped is unverified.</li>
+    <li><strong style="color:var(--txt)">Third-party only:</strong> Bitget lists OCTA and offers card/bank buys routed through Alchemy Pay, Banxa, Mercuryo, and Simplex — that is Bitget's gateway infrastructure, not OctaSpace's.</li>
+    <li>Platform deposits today: OctaSpace Cube accepts crypto deposits via Web3 wallets. No fiat rails.</li>
+  </ul>
+</section>
+
+<section id="why">
+  <div class="sec-head"><h2>Why Base, and why fiat ramps</h2></div>
+  <div class="cards">
+    <div class="card"><span class="icon">🌉</span>
+      <h3>Base is where retail on-ramps land</h3>
+      <p>Coinbase's L2 is the default destination for first-time crypto buyers in the US. An official OCTA on Base puts the token one hop from every major fiat ramp and wallet, instead of requiring users to learn a new L1 first.</p>
+    </div>
+    <div class="card"><span class="icon">💳</span>
+      <h3>Fiat is the #1 consumer friction</h3>
+      <p>Today a new user must already own crypto to rent a GPU. A credit-card on-ramp turns "rent a 4090 for an evening" into a 2-minute signup flow — the single biggest unlock for consumer growth vs Vast.ai and Salad.</p>
+    </div>
+    <div class="card"><span class="icon">🧲</span>
+      <h3>Liquidity follows the canonical token</h3>
+      <p>Right now, Base DEX liquidity for "OCTA" is fragmented across scam copycats. One official, verified contract consolidates liquidity and gives aggregators something safe to route through.</p>
+    </div>
+    <div class="card"><span class="icon">🛡️</span>
+      <h3>Delay has a scam cost</h3>
+      <p>Every month without an official Base token, copycats fill the vacuum and real users get burned. Shipping the canonical contract <em>is</em> the consumer-protection move.</p>
+    </div>
+  </div>
+</section>
+
+<section id="base">
+  <div class="sec-head">
+    <h2>Part A — OCTA on Base: design options</h2>
+    <p>Three viable architectures. Only the OctaSpace team can deploy the canonical contract — this section exists so the choice is informed, not improvised.</p>
+  </div>
+  <div class="table-wrap"><table>
+    <tr><th>Option</th><th>How it works</th><th>Pros</th><th>Cons</th></tr>
+    <tr>
+      <td><strong>A. Canonical lock-and-mint bridge</strong></td>
+      <td>Team deploys an ERC-20 on Base; native OCTA locks in a team-controlled vault, 1:1 mints on Base (and burns on return).</td>
+      <td>Simple mental model; team keeps full custody control; no third-party protocol risk.</td>
+      <td>Team operates bridge infra (relayer, monitoring, pause controls); bridge code must be audited; single-operator trust assumption.</td>
+    </tr>
+    <tr>
+      <td><strong>B. LayerZero OFT</strong></td>
+      <td>OCTA deployed as an Omnichain Fungible Token; burns on source, mints on destination via LayerZero messaging.</td>
+      <td>Battle-tested standard; no pooled liquidity to attack; easy future expansion to other chains; no custom bridge to operate.</td>
+      <td>Depends on LayerZero infra; small per-message fees; team still deploys and owns the contracts.</td>
+    </tr>
+    <tr>
+      <td><strong>C. Route via existing wOCTA (Ethereum)</strong></td>
+      <td>Bridge the existing Ethereum-mainnet wOCTA to Base with a standard ERC-20 bridge.</td>
+      <td>Fastest path; reuses the audited wOCTA contract.</td>
+      <td>Two-hop mental model (L1 → Ethereum → Base); Ethereum gas for the first hop; inherits wOCTA's existing trust assumptions.</td>
+    </tr>
+  </table></div>
+  <div class="ok"><strong>Recommendation: Option B (LayerZero OFT), fallback A.</strong>
+    <p style="margin:8px 0 0">OFT removes the honeypot problem of a lock-and-mint vault and the team never has to operate relayer infrastructure. If the team prefers zero external dependencies, Option A is a fine, well-understood alternative — but it must ship with audited contracts, a pause mechanism, and published monitoring.</p>
+  </div>
+  <h3>Canonical contract checklist (applies to any option)</h3>
+  <ul>
+    <li>Source code <strong style="color:var(--txt)">verified on BaseScan</strong> before any announcement.</li>
+    <li>Standard ERC-20 metadata (name, symbol, 18 decimals); ownership/roles documented.</li>
+    <li>Published in a <strong style="color:var(--txt)">canonical token-list JSON</strong> at a stable URL (see <a href="data/octa-tokenlist.json">data/octa-tokenlist.json</a> — community draft, to be superseded by the team's official list).</li>
+    <li>Announcement from official OctaSpace channels linking the contract — this is what makes it "official," not the code alone.</li>
+    <li>Seeded DEX liquidity on Base (team-seeded pool, disclosed amounts) so the first users aren't trading against copycats.</li>
+  </ul>
+</section>
+
+<section id="scam">
+  <div class="sec-head"><h2>⚠️ Scam-token warning</h2><p>Read this before buying anything called "OCTA" on Base.</p></div>
+  <div class="warn">
+    <strong>As of 2026-09-27, there is NO official OCTA token on Base.</strong>
+    <p>These contracts use the OCTA name on Base without any official link. Do not buy them expecting the real token:</p>
+    <ul style="margin-top:10px">
+      <li><span class="addr">0xd2cedc7c1fdd25c715d5a4a7ff58335e955db805</span><br>
+        <span style="font-size:.85rem">Listed on TheBitTimes with ~$2.67 liquidity; page tagged "OCTA Scam". Almost certainly a copycat.</span></li>
+      <li style="margin-top:8px"><span class="addr">0xbA2cC7f2dF2f8bdA431a4074AB6B4DEdEA22db07</span><br>
+        <span style="font-size:.85rem">Indexed by Coinbase with essentially no market data. Unverified, no official link.</span></li>
+    </ul>
+    <p style="margin-top:10px">Also note: DEX Screener's "OCTA" on Base is <strong>Octagon Legends</strong> — a different project entirely.</p>
+    <p style="margin-bottom:0"><strong>Rule of thumb:</strong> the real token will be announced from OctaSpace's official channels <em>with</em> a verified BaseScan link. Anything else is guilty until proven innocent. A machine-readable version of this warning ships with this RFC: <a href="data/octa-tokenlist.json">octa-tokenlist.json</a>.</p>
+  </div>
+</section>
+
+<section id="fiat">
+  <div class="sec-head">
+    <h2>Part B — Fiat on/off ramp: provider comparison &amp; phased plan</h2>
+    <p>Reality check first: <strong style="color:var(--txt)">getting OCTA listed as a buyable asset on any ramp provider is a commercial agreement that only the OctaSpace team can sign</strong> (it requires their KYB/business verification). Everything below is designed around that constraint.</p>
+  </div>
+  <h3>Ramp provider comparison</h3>
+  <div class="table-wrap"><table>
+    <tr><th>Provider</th><th>Integration</th><th>Notes for OctaSpace</th></tr>
+    <tr>
+      <td><strong>Transak</strong></td>
+      <td>Self-serve dashboard, sandbox keys, embeddable widget + API</td>
+      <td>Fastest to prototype (sandbox needs no partnership). Listing OCTA as a direct-buy asset still needs a commercial agreement + KYB.</td>
+    </tr>
+    <tr>
+      <td><strong>MoonPay</strong></td>
+      <td>Widget + API, sandbox environment</td>
+      <td>Strong US card coverage. Same caveat: sandbox is self-serve, production asset listing is a partnership.</td>
+    </tr>
+    <tr>
+      <td><strong>Coinbase Onramp</strong></td>
+      <td>API-first, USDC-centric</td>
+      <td>Natural fit for a Base-first strategy (fiat → USDC on Base in one step). Asset support is Coinbase-gated.</td>
+    </tr>
+    <tr>
+      <td><strong>Banxa</strong></td>
+      <td>Widget + API</td>
+      <td>Already in Bitget's OCTA buy flow — familiarity upside, same partnership requirement for direct integration.</td>
+    </tr>
+  </table></div>
+  <h3>Phased plan</h3>
+  <div class="phase">
+    <div class="who">Phase 0 · community · no permission needed</div>
+    <h4>This RFC + scam-token warning + token-list JSON</h4>
+    <p>Establishes the design consensus and protects users today. <strong style="color:#34d399">Shipped with this page.</strong></p>
+  </div>
+  <div class="phase">
+    <div class="who">Phase 1 · community prototype · sandbox keys only</div>
+    <h4>On-ramp widget demo: fiat → USDC on Base</h4>
+    <p>A standalone demo page embedding a Transak/MoonPay <strong style="color:var(--txt)">staging</strong> widget showing the exact UX the team would adopt: card payment → USDC lands on Base. Clearly labeled demo, not production. Proves the flow end-to-end without any team account, and pairs with a DEX-swap step (USDC → OCTA via an aggregator quote) to complete the "buy OCTA with a card" story.</p>
+  </div>
+  <div class="phase">
+    <div class="who">Phase 2 · OctaSpace team</div>
+    <h4>Official Base token + canonical token list</h4>
+    <p>Deploy the canonical contract (Part A), verify on BaseScan, publish the official token list, announce from official channels, seed DEX liquidity. This is the step that kills the copycats.</p>
+  </div>
+  <div class="phase">
+    <div class="who">Phase 3 · OctaSpace team + commercial agreements</div>
+    <h4>Production ramps: OCTA as a buyable/sellable asset</h4>
+    <p>Team completes KYB with a chosen ramp provider, gets OCTA listed as a direct-buy asset, and embeds the production widget in Cube (buy) plus a sell widget or bank-withdrawal rail (off-ramp). Until then, the Zebec card remains the spend path and third-party exchanges remain the off-ramp.</p>
+  </div>
+  <div class="ok"><strong>What the community will NOT do:</strong>
+    <p style="margin:8px 0 0">Deploy anything that looks like official OCTA · operate custody or bridges with user funds · sign up for ramp-provider production accounts in OctaSpace's name · touch the team's private keys or billing infra. The line between "helpful prototype" and "impersonation" is bright, and we stay on the right side of it.</p>
+  </div>
+</section>
+
+<section id="sdk">
+  <div class="sec-head"><h2>Part C — SDK support</h2><p>What developers need to build on top of all this.</p></div>
+  <ul>
+    <li><strong style="color:var(--txt)">New viem-based helper package</strong> in the js-sdk style: Base mainnet (chain ID <code>8453</code>) and Base Sepolia (<code>84532</code>) chain configs, ERC-20 helpers (balance, transfer, allowance, decimals).</li>
+    <li><strong style="color:var(--txt)">Testnet-first:</strong> build and test against a throwaway ERC-20 on Base Sepolia — no official contract needed to start.</li>
+    <li><strong style="color:var(--txt)">Token-list consumer:</strong> a tiny resolver that loads the canonical token-list JSON and returns the official contract address per chain — so dApps never hardcode (or trust) a copycat.</li>
+    <li><strong style="color:var(--txt)">Demo dApp (Phase 1):</strong> "pay for GPU hours with OCTA on Base" — wallet-connect + mock invoice settled in the Sepolia test token. Proves the UX; the real version needs the official contract + billing API cooperation.</li>
+    <li>All of this can be developed unilaterally and offered to the team as PRs against their SDK repos.</li>
+  </ul>
+</section>
+
+<section id="security">
+  <div class="sec-head"><h2>Security &amp; compliance notes</h2></div>
+  <ul>
+    <li><strong style="color:var(--txt)">Impersonation risk is the #1 hazard.</strong> Any community token, widget, or page must be unmistakably labeled unofficial/demo. Nothing we ship may look like an official OctaSpace product.</li>
+    <li><strong style="color:var(--txt)">Ramp providers handle KYC/AML</strong> — that's the point of using them instead of building money transmission in-house. The team never touches user fiat directly in this design.</li>
+    <li><strong style="color:var(--txt)">Money-transmitter licensing</strong> stays with the licensed ramp provider; OctaSpace's KYB is a business-verification step, not a license application — but the team should confirm with counsel before signing.</li>
+    <li><strong style="color:var(--txt)">Bridge custody</strong> (Option A): if the team runs lock-and-mint, the vault needs audited contracts, a pause mechanism, multisig control, and public monitoring. This is the strongest argument for Option B (OFT).</li>
+    <li><strong style="color:var(--txt)">Phishing:</strong> the official announcement must come from official channels with a verified BaseScan link. The community will amplify only that link.</li>
+  </ul>
+</section>
+
+<section id="questions">
+  <div class="sec-head"><h2>Open questions for the OctaSpace team</h2><p>Honest framing: our research found no public evidence of in-progress Base or fiat-ramp work — if it's happening in Discord/Telegram, we'd love a pointer so this RFC targets reality instead of guessing.</p></div>
+  <div class="q"><strong>1. Is a Base deployment actually on the roadmap?</strong> If yes, which token model are you leaning toward (bridged ERC-20, OFT, or via wOCTA)?</div>
+  <div class="q"><strong>2. Has a fiat-ramp vendor been evaluated or selected?</strong> If Transak/MoonPay/Coinbase conversations exist, the Phase 1 demo can target the chosen provider's widget.</div>
+  <div class="q"><strong>3. What's the status of the Zebec Black x OCTA co-branded card?</strong> "In development" as of July 2025 — did it ship?</div>
+  <div class="q"><strong>4. Would you accept community PRs for Base SDK helpers</strong> (viem-based, testnet-first) against the official SDK repos?</div>
+  <div class="q"><strong>5. Will you publish and maintain a canonical token list</strong> once a Base contract exists, so wallets resolve the real token?</div>
+  <p style="margin-top:18px">Team members can reach the author via <a href="https://x.com/kshot9000" target="_blank" rel="noopener">@kshot9000</a> or <a href="https://github.com/Kshot3000" target="_blank" rel="noopener">GitHub</a>. This RFC is a living document — it will be revised as answers come in.</p>
+</section>
+
+<section id="changelog">
+  <div class="sec-head"><h2>Changelog</h2></div>
+  <ul>
+    <li><strong style="color:var(--txt)">v0.1 — 2026-09-27:</strong> Initial draft. Research findings, three Base design options with recommendation, four-provider ramp comparison, phased plan, scam-token warning list, SDK scope, open questions.</li>
+  </ul>
+  <p class="disclaimer" style="margin-top:20px">Unofficial community project. Not affiliated with the OctaSpace team. Nothing here is financial advice. Contract addresses in the warning section are presented as unverified copycats based on third-party tracker data — verify independently.</p>
+</section>
+
+</div>
+
+<footer><div class="wrap">
+  <div class="foot-grid">
+    <div>
+      <strong style="color:var(--txt)">OctaSpace Hub</strong><br>
+      A community project by <a href="https://x.com/kshot9000" target="_blank" rel="noopener">@kshot9000</a> · <span data-year></span>
+    </div>
+    <div class="donate">
+      Support the mission:<br>
+      <code title="OCTA / ETH">0x4b6f3BC697D9dAF3e8dE182aEc56eD208B9087f1</code><br>
+      <span style="font-size:.78rem">OCTA / ETH ↑</span><br>
+      <code title="PRL">prl1p62v09vuzyd8kdz9l23jaf3kph4wwx6jqcmhkkhg8lhr2qlxky8psu3zw9d</code><br>
+      <span style="font-size:.82rem">PRL ↑</span><br>
+      <span style="font-size:.82rem"><a href="https://x.com/kshot9000" target="_blank" rel="noopener">X: @kshot9000</a> ·
+      <a href="https://github.com/Kshot3000" target="_blank" rel="noopener">GitHub: Kshot3000</a></span>
+    </div>
+  </div>
+  <p class="disclaimer">Unofficial community project. Not affiliated with the OctaSpace team, Vast.ai, or Salad. Research conducted 2026-09-27 from public sources; unverified items are labeled.</p>
+</div></footer>
+<script src="js/app.js"></script>
+</body>
+</html>
