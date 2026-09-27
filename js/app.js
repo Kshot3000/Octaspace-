@@ -37,6 +37,8 @@
       chg.classList.toggle("neg", v < 0);
     }
     setText("octa-stake-usd", fmtUSD(d.price * 100000, 0));
+    var stakeUsd = fmtUSD(d.price * 100000, 0);
+    document.querySelectorAll(".stake-usd-live").forEach(function(el){ el.textContent = stakeUsd; });
     var ts = document.getElementById("octa-updated");
     if(ts) ts.textContent = d.note === "live"
       ? "Live via CoinGecko"
