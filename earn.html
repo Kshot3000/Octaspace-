@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earn as an OctaSpace Provider — Setup Guide &amp; Calculator | OctaSpace Hub</title>
+<meta name="description" content="Become an OctaSpace provider: node requirements, staking, setup steps, idle mining, and an earnings calculator.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav><div class="wrap nav-in">
+  <a class="brand" href="index.html"><span class="dot"></span>OctaSpace Hub</a>
+  <div class="nav-links">
+    <a data-page="index" href="index.html">Mission</a>
+    <a data-page="compare" href="compare.html">vs Vast.ai &amp; Salad</a>
+    <a data-page="earn" href="earn.html">Earn as Provider</a>
+    <a data-page="build" href="build.html">Build</a>
+    <a class="cta" href="https://octa.space" target="_blank" rel="noopener">octa.space ↗</a>
+  </div>
+</div></nav>
+
+<div class="wrap">
+<header class="hero" style="padding:56px 0 36px">
+  <span class="kicker">Provider playbook</span>
+  <h1>Put your GPUs to work on <span class="grad">OctaSpace</span></h1>
+  <p class="lead">List your hardware, set your own prices, get paid in OCTA per minute — and let idle mining cover the gaps. Here's the full path from zero to earning.</p>
+</header>
+
+<section style="padding-top:0">
+  <div class="sec-head"><h2>What you need</h2></div>
+  <div class="cards">
+    <div class="card"><span class="icon">🖥️</span><h3>Hardware</h3><p>Any x86-64 or ARM machine running Linux (Ubuntu LTS / Debian recommended; Windows node support in beta). Minimum: 1 CPU, 1GB RAM, 10GB disk. For AI/ML workloads: NVIDIA or AMD GPUs on a high-bandwidth PCIe slot, plus ample storage.</p></div>
+    <div class="card"><span class="icon">🔒</span><h3>100,000 OCTA stake</h3><p>Service nodes lock <strong>100,000 OCTA</strong> as collateral (currently <strong id="octa-stake-usd">~$12,690</strong>). Keep node reliability above 75% over 30 days. This is the honest cost of entry — the calculator below factors it in.</p></div>
+    <div class="card"><span class="icon">🌐</span><h3>Connectivity</h3><p>Stable internet with solid upload — the network benchmarks your up/down speed, disk write speed, and GPU performance so renters can pick the right box for the job.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>Setup in five steps</h2></div>
+  <div class="steps">
+    <div class="step"><h3>Install the node software</h3><p>Grab <code>orc</code>, the OctaSpace node software, from the official GitHub org:</p><p><code>github.com/octaspace/orc</code></p><p>Follow the repo README for your distro. Docker images are published under <code>octaspace</code> on Docker Hub.</p></div>
+    <div class="step"><h3>Fund a wallet &amp; stake</h3><p>Get OCTA (bridge from Ethereum/BSC or buy on a listed venue), then lock the 100,000 OCTA collateral and link your wallet to your node. Rewards flow to that wallet address.</p></div>
+    <div class="step"><h3>Configure services</h3><p>Choose what your node sells: GPU compute, VPN exit, storage, rendering. Set your own per-minute prices — check the <a href="compare.html">comparison page</a> to position against Vast.ai rates.</p></div>
+    <div class="step"><h3>Enable idle mining</h3><p>Add an Idle Job (e.g. XMR via xmrig) so the node mines automatically when no rental is active and yields instantly when one starts. Unrented ≠ unpaid.</p></div>
+    <div class="step"><h3>Stay reliable</h3><p>Uptime is your reputation score — it's on-chain and renters see it. Hold 75%+ and your node keeps its staking rewards; dip below and rewards pause.</p></div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>Earnings calculator</h2>
+    <p>Scenario planner: your hardware, your prices, your power costs. OCTA price is live.</p>
+  </div>
+  <div class="calc">
+    <div class="calc-grid">
+      <div class="field"><label>Your rental price (USD / GPU-hour)</label><input id="c-price" type="number" min="0" step="0.01" value="0.25"></div>
+      <div class="field"><label>GPUs</label><input id="c-gpus" type="number" min="1" step="1" value="2"></div>
+      <div class="field"><label>Expected rental utilization <span class="range-val" id="c-util-val">40%</span></label><input id="c-util" type="range" min="0" max="100" value="40"></div>
+      <div class="field"><label>Idle-mining fallback (USD / GPU / day)</label><input id="c-idle" type="number" min="0" step="0.1" value="0.8"></div>
+      <div class="field"><label>Power draw per GPU (watts)</label><input id="c-power" type="number" min="0" step="10" value="300"></div>
+      <div class="field"><label>Electricity rate (USD / kWh)</label><input id="c-elec" type="number" min="0" step="0.01" value="0.12"></div>
+    </div>
+    <div class="calc-out">
+      <div class="big" id="o-net">$0</div>
+      <div class="sub">estimated net / month &nbsp;·&nbsp; <span id="o-net-octa">—</span></div>
+      <div class="sub" style="margin-top:10px">Gross <span id="o-gross">$0</span> &nbsp;·&nbsp; Power <span id="o-power">$0</span> &nbsp;·&nbsp; 100k OCTA stake ≈ <span id="o-stake">$0</span></div>
+    </div>
+    <p class="calc-note" id="o-note"></p>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head"><h2>Provider tips</h2></div>
+  <div class="cards">
+    <div class="card"><span class="icon">🎯</span><h3>Price against Vast.ai, not AWS</h3><p>Renters cross-shop you against Vast.ai spot ($0.15–0.29/hr for a 4090). Undercut slightly on price or win on reliability score and included services.</p></div>
+    <div class="card"><span class="icon">📦</span><h3>Sell the whole box</h3><p>A GPU node that also offers VPN exit and storage earns three ways from one machine. Enable every service your hardware qualifies for.</p></div>
+    <div class="card"><span class="icon">🔋</span><h3>Idle mining is the edge</h3><p>Vast.ai hosts earn zero when idle. Your node never does. Size your idle-mining config for your power rate so the floor stays profitable.</p></div>
+  </div>
+</section>
+</div>
+
+<footer><div class="wrap">
+  <div class="foot-grid">
+    <div>
+      <strong style="color:var(--txt)">OctaSpace Hub</strong><br>
+      A community project by <a href="https://x.com/kshot9000" target="_blank" rel="noopener">@kshot9000</a> · <span data-year></span>
+    </div>
+    <div class="donate">
+      Support the mission:<br>
+      <code title="OCTA / ETH">0x4b6f3BC697D9dAF3e8dE182aEc56eD208B9087f1</code><br>
+      <span style="font-size:.78rem">OCTA / ETH ↑</span><br>
+      <code title="PRL">prl1p62v09vuzyd8kdz9l23jaf3kph4wwx6jqcmhkkhg8lhr2qlxky8psu3zw9d</code><br>
+      <span style="font-size:.78rem">PRL ↑</span><br>
+      <span style="font-size:.82rem"><a href="https://x.com/kshot9000" target="_blank" rel="noopener">X: @kshot9000</a> ·
+      <a href="https://github.com/Kshot3000" target="_blank" rel="noopener">GitHub: Kshot3000</a></span>
+    </div>
+  </div>
+  <p class="disclaimer">Unofficial community project. Not affiliated with the OctaSpace team. The calculator is a scenario planner, not financial advice — rental demand varies and OCTA is volatile.</p>
+</div></footer>
+<script src="js/app.js"></script>
+<script src="js/calculator.js"></script>
+</body>
+</html>

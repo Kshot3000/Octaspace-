@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>OctaSpace Hub — Helping Decentralized Compute Win</title>
+<meta name="description" content="Community mission control for OctaSpace: honest comparisons vs Vast.ai and Salad, provider guides, and an earnings calculator for the decentralized GPU cloud.">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<nav><div class="wrap nav-in">
+  <a class="brand" href="index.html"><span class="dot"></span>OctaSpace Hub</a>
+  <div class="nav-links">
+    <a data-page="index" href="index.html">Mission</a>
+    <a data-page="compare" href="compare.html">vs Vast.ai &amp; Salad</a>
+    <a data-page="earn" href="earn.html">Earn as Provider</a>
+    <a data-page="build" href="build.html">Build</a>
+    <a class="cta" href="https://octa.space" target="_blank" rel="noopener">octa.space ↗</a>
+  </div>
+</div></nav>
+
+<header class="hero"><div class="wrap">
+  <span class="kicker">Community mission control</span>
+  <h1>Helping <span class="grad">OctaSpace</span> overtake Vast.ai&nbsp;and&nbsp;Salad</h1>
+  <p class="lead">The decentralized GPU cloud is real — own blockchain, per-minute billing, on-chain escrow. We're building the guides, calculators, and honest comparisons to bring providers and renters over.</p>
+  <div class="btn-row">
+    <a class="btn btn-primary" href="earn.html">Start earning as a provider</a>
+    <a class="btn btn-ghost" href="compare.html">See the head-to-head</a>
+  </div>
+  <div class="stats">
+    <div class="stat"><div class="v" id="octa-price">—</div><div class="l">OCTA price (USD)</div></div>
+    <div class="stat"><div class="v" id="octa-change">—</div><div class="l">24h change</div></div>
+    <div class="stat"><div class="v" id="octa-mcap">—</div><div class="l">Market cap</div></div>
+    <div class="stat"><div class="v" id="octa-vol">—</div><div class="l">24h volume</div></div>
+  </div>
+  <p style="color:var(--muted);font-size:.8rem" id="octa-updated">Loading live data…</p>
+</div></header>
+
+<div class="wrap">
+<section>
+  <div class="sec-head">
+    <h2>Why OctaSpace can win</h2>
+    <p>Three structural advantages the centralized incumbents can't copy.</p>
+  </div>
+  <div class="cards">
+    <div class="card"><span class="icon">⛓️</span>
+      <h3>Truly decentralized</h3>
+      <p>OctaSpace runs on its own Layer-1 blockchain. No single company sets fees, bans regions, or takes a cut of every rental — settlement is on-chain with escrow and provider reputation built into the protocol.</p>
+    </div>
+    <div class="card"><span class="icon">💸</span>
+      <h3>Providers keep more</h3>
+      <p>You set your own rental prices and get paid in OCTA per minute of use. And when nobody's renting, idle-mining kicks in automatically — unrented time still earns instead of sitting idle.</p>
+    </div>
+    <div class="card"><span class="icon">🧰</span>
+      <h3>More than GPUs</h3>
+      <p>One network for GPU compute, AI/ML environments, distributed rendering, IPFS storage, and VPN exit nodes. Renters get a full decentralized cloud; providers monetize every spare resource.</p>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>The mission</h2>
+    <p>What this community project is doing, concretely.</p>
+  </div>
+  <div class="mission">
+    <ul>
+      <li><strong>Honest comparisons.</strong> OctaSpace vs Vast.ai vs Salad on pricing, fees, payouts, and decentralization — with sources, updated as the market moves. <a href="compare.html">Read the breakdown →</a></li>
+      <li><strong>Provider onboarding.</strong> Step-by-step node setup, staking requirements, and the idle-mining setup that keeps rigs earning 24/7. <a href="earn.html">Become a provider →</a></li>
+      <li><strong>Developer resources.</strong> SDKs, CLI tools, and node software — everything needed to build on the network in one place. <a href="build.html">Start building →</a></li>
+      <li><strong>Upstream fixes.</strong> We're auditing OctaSpace's open-source repos for real bugs and contributing fixes back — because the best way to help a network win is to make its software better.</li>
+    </ul>
+  </div>
+</section>
+
+<section>
+  <div class="sec-head">
+    <h2>At a glance</h2>
+    <p>How the three contenders stack up. Full detail on the comparison page.</p>
+  </div>
+  <div class="table-wrap"><table>
+    <tr><th></th><th class="hl">OctaSpace</th><th>Vast.ai</th><th>Salad</th></tr>
+    <tr><td><strong>Model</strong></td><td class="hl"><span class="tag win">Decentralized</span><br>Own L1 blockchain, on-chain escrow</td><td><span class="tag mid">Marketplace</span><br>Centralized P2P GPU market</td><td><span class="tag mid">App network</span><br>Centralized, consumer-first</td></tr>
+    <tr><td><strong>Provider payout</strong></td><td class="hl"><span class="tag win">OCTA crypto</span><br>Per-minute, you set the price</td><td><span class="tag mid">Credits</span><br>Hosts set rates, per-second billing</td><td><span class="tag win">Cash-friendly</span><br>PayPal, gift cards, crypto</td></tr>
+    <tr><td><strong>Idle earnings</strong></td><td class="hl"><span class="tag win">Idle mining</span><br>Auto-mines when unrented</td><td>None — idle time earns nothing</td><td><span class="tag win">Mining fallback</span><br>Always-on fallback workload</td></tr>
+    <tr><td><strong>Onboarding</strong></td><td class="hl">Node software + 100k OCTA stake</td><td>Host app, no stake</td><td><span class="tag win">One-click</span><br>Windows app, 6GB+ VRAM</td></tr>
+  </table></div>
+  <p style="text-align:center;margin-top:18px"><a class="btn btn-ghost" href="compare.html">Full comparison with sources</a></p>
+</section>
+</div>
+
+<footer><div class="wrap">
+  <div class="foot-grid">
+    <div>
+      <strong style="color:var(--txt)">OctaSpace Hub</strong><br>
+      A community project by <a href="https://x.com/kshot9000" target="_blank" rel="noopener">@kshot9000</a> · <span data-year></span>
+    </div>
+    <div class="donate">
+      Support the mission:<br>
+      <code title="OCTA / ETH">0x4b6f3BC697D9dAF3e8dE182aEc56eD208B9087f1</code><br>
+      <span style="font-size:.78rem">OCTA / ETH ↑</span><br>
+      <code title="PRL">prl1p62v09vuzyd8kdz9l23jaf3kph4wwx6jqcmhkkhg8lhr2qlxky8psu3zw9d</code><br>
+      <span style="font-size:.78rem">PRL ↑</span><br>
+      <span style="font-size:.82rem"><a href="https://x.com/kshot9000" target="_blank" rel="noopener">X: @kshot9000</a> ·
+      <a href="https://github.com/Kshot3000" target="_blank" rel="noopener">GitHub: Kshot3000</a></span>
+    </div>
+  </div>
+  <p class="disclaimer">Unofficial community project. Not affiliated with the OctaSpace team, Vast.ai, or Salad. Stats via CoinGecko. Figures on this page are snapshots for comparison — verify current pricing on each platform before renting or providing.</p>
+</div></footer>
+<script src="js/app.js"></script>
+</body>
+</html>
