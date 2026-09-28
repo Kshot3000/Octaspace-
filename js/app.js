@@ -70,6 +70,31 @@
       .catch(function(){ /* fallback already rendered */ });
   }
 
-  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", load);
-  else load();
+  // Live OctaSpace marketplace averages (compare.html). Falls back to the
+  // baked snapshot text in the markup if the fetch fails.
+  function loadMarketplace(){
+    var price = document.getElementById("octa-4090-price");
+    if(!price) return; // page doesn't show a marketplace average
+    fetch("https://api.octa.computer/network")
+      .then(function(r){ if(!r.ok) throw new Error("octa "+r.status); return r.json(); })
+      .then(function(j){
+        var g = j && j.marketplace && j.marketplace.gpus;
+        var o = g && g["NVIDIA GeForce RTX 4090"];
+        if(!o || typeof o.avg_price !== "number") return;
+        price.textContent = "$" + o.avg_price.toFixed(2);
+        var count = document.getElementById("octa-4090-count");
+        if(count) count.textContent = String(o.count);
+        var when = document.getElementById("octa-4090-when");
+        if(when) when.textContent = "live " + new Date().toLocaleString("en-US",{month:"short",day:"numeric",hour:"numeric",minute:"2-digit"});
+      })
+      .catch(function(){ /* baked snapshot text stays */ });
+  }
+
+  function init(){
+    load();
+    loadMarketplace();
+  }
+
+  if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
 })();
