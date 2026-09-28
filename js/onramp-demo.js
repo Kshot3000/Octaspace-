@@ -72,6 +72,12 @@
     $("q1-card").textContent = "−" + fmtUSD(CARD_FEE);
     $("q1-usdc").textContent = fmtNum(usdc, 2) + " USDC";
     $("quote1").hidden = false;
+    if($("quote1").scrollIntoView) $("quote1").scrollIntoView({behavior:"smooth", block:"nearest"});
+  }
+
+  function gotoStep2(){
+    var err = $("err2"); err.textContent = "";
+    if(state.usdc <= 0){ err.textContent = "Run Step 1 first to get a simulated USDC balance."; return; }
     showStep(2);
   }
 
@@ -90,8 +96,12 @@
     $("q2-price").textContent = fmtUSD(state.octaPrice, 4);
     $("q2-octa").textContent = fmtNum(octa, 2) + " OCTA";
     $("quote2").hidden = false;
-    showStep(3);
+    if($("quote2").scrollIntoView) $("quote2").scrollIntoView({behavior:"smooth", block:"nearest"});
+  }
+
+  function gotoStep3(){
     step3();
+    showStep(3);
   }
 
   function step3(){
@@ -113,6 +123,8 @@
     initPrice();
     $("btn-quote1").addEventListener("click", step1);
     $("btn-quote2").addEventListener("click", step2);
+    $("btn-next2").addEventListener("click", gotoStep2);
+    $("btn-next3").addEventListener("click", gotoStep3);
     $("btn-reset").addEventListener("click", reset);
     $("fiat-amount").addEventListener("keydown", function(e){
       if(e.key === "Enter"){ e.preventDefault(); step1(); }
