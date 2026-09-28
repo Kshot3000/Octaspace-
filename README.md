@@ -6,7 +6,7 @@ Community mission control for **OctaSpace** — helping the decentralized GPU cl
 
 ## What's here
 
-- `index.html` — mission, live OCTA stats (CoinGecko), why-OctaSpace pillars, comparison snapshot
+- `index.html` — mission, live OCTA stats (CoinGecko), live network pulse (nodes, utilization, sessions, chain height via api.octa.computer), why-OctaSpace pillars, comparison snapshot
 - `compare.html` — honest head-to-head: OctaSpace vs Vast.ai vs Salad, with sources
 - `earn.html` — provider playbook: requirements, 5-step setup, idle mining, earnings calculator
 - `build.html` — developer resources: SDKs, CLIs, node software, upstream contribution

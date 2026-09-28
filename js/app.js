@@ -90,9 +90,30 @@
       .catch(function(){ /* baked snapshot text stays */ });
   }
 
+  // Live network pulse (index.html "Network pulse" section). api.octa.computer is CORS-open.
+  function loadNetwork(){
+    if(!document.getElementById("net-nodes")) return; // page has no network-pulse section
+    var note = document.getElementById("net-updated");
+    fetch("https://api.octa.computer/network")
+      .then(function(r){ if(!r.ok) throw new Error("octa "+r.status); return r.json(); })
+      .then(function(j){
+        var mp = j.marketplace || {}, n = j.nodes || {}, bc = j.blockchain || {};
+        var rented = mp.nodes_rented || 0, idle = mp.nodes_idle || 0, tot = rented + idle;
+        setText("net-nodes", (n.count || tot).toLocaleString("en-US"));
+        setText("net-locs", String(n.locations || 0));
+        setText("net-rented", rented.toLocaleString("en-US"));
+        setText("net-rented-sub", tot ? Math.round(rented / tot * 100) + "% of nodes" : "—");
+        setText("net-sessions", (mp.sessions_24h || 0).toLocaleString("en-US"));
+        setText("net-height", (bc.height || 0).toLocaleString("en-US"));
+        if(note) note.textContent = "live via api.octa.computer";
+      })
+      .catch(function(){ if(note) note.textContent = "live feed unavailable"; });
+  }
+
   function init(){
     load();
     loadMarketplace();
+    loadNetwork();
   }
 
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
