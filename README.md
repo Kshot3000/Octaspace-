@@ -10,7 +10,9 @@ Community mission control for **OctaSpace** — helping the decentralized GPU cl
 - `compare.html` — honest head-to-head: OctaSpace vs Vast.ai vs Salad, with sources
 - `earn.html` — provider playbook: requirements, 5-step setup, idle mining, earnings calculator
 - `build.html` — developer resources: SDKs, CLIs, node software, upstream contribution
-- `css/style.css`, `js/app.js` (live price), `js/calculator.js`
+- `rfc-base-fiat.html` — RFC-001: design options for official OCTA on Base + fiat on/off-ramps, with a scam-copycat token warning list (`data/octa-tokenlist.json`)
+- `onramp-demo.html` — on-ramp UX walkthrough demo, loudly labeled sandbox/simulation
+- `css/style.css`, `js/app.js` (live price + network pulse), `js/calculator.js`, `js/fx-bg.js` (animated background), `js/onramp-demo.js`
 
 ## Mission
 
