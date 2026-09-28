@@ -32,7 +32,7 @@
   <div class="sec-head"><h2>What you need</h2></div>
   <div class="cards">
     <div class="card"><span class="icon">🖥️</span><h3>Hardware</h3><p>Any x86-64 or ARM machine running Linux (Ubuntu LTS / Debian recommended; Windows node support in beta). Minimum: 1 CPU, 1GB RAM, 10GB disk. For AI/ML workloads: NVIDIA or AMD GPUs on a high-bandwidth PCIe slot, plus ample storage.</p></div>
-    <div class="card"><span class="icon">🔒</span><h3>100,000 OCTA stake</h3><p>Service nodes lock <strong>100,000 OCTA</strong> as collateral (currently <strong id="octa-stake-usd">~$12,690</strong>). Keep node reliability above 75% over 30 days. <span style="font-size:.85em">Figures per the OctaSpace whitepaper — confirm the current requirement in the <a href="https://whitepaper.octa.space/octaspace-whitepaper.pdf" target="_blank" rel="noopener">official docs</a> before buying OCTA.</span> This is the honest cost of entry — the calculator below factors it in.</p></div>
+    <div class="card"><span class="icon">🔒</span><h3>Staking: optional, not required</h3><p>Running a node takes <strong>no OCTA stake</strong> — you earn from rentals and idle mining with just the software running. <strong>Staking is an optional extra:</strong> lock <strong>100,000 OCTA</strong> as collateral (currently <strong id="octa-stake-usd">…</strong>) and keep node reliability above 75% over 30 days to earn staking rewards on top. <span style="font-size:.85em">Figures per the OctaSpace whitepaper — confirm the current requirements in the <a href="https://whitepaper.octa.space/octaspace-whitepaper.pdf" target="_blank" rel="noopener">official docs</a> before buying OCTA.</span></p></div>
     <div class="card"><span class="icon">🌐</span><h3>Connectivity</h3><p>Stable internet with solid upload — the network benchmarks your up/down speed, disk write speed, and GPU performance so renters can pick the right box for the job.</p></div>
   </div>
 </section>
@@ -41,10 +41,10 @@
   <div class="sec-head"><h2>Setup in five steps</h2></div>
   <div class="steps">
     <div class="step"><h3>Install the node software</h3><p>Grab <code>orc</code>, the OctaSpace node software, from the official GitHub org:</p><p><code>github.com/octaspace/orc</code></p><p>Follow the repo README for your distro. Docker images are published under <code>octaspace</code> on Docker Hub.</p></div>
-    <div class="step"><h3>Fund a wallet &amp; stake</h3><p>Get OCTA (bridge from Ethereum/BSC or buy on a listed venue), then lock the 100,000 OCTA collateral (whitepaper figure — verify current) and link your wallet to your node. Rewards flow to that wallet address.</p></div>
+    <div class="step"><h3>Optional: stake for rewards</h3><p>No stake is needed to operate a node — this step is purely for extra yield. Get OCTA (bridge from Ethereum/BSC or buy on a listed venue), lock the 100,000 OCTA collateral (whitepaper figure — verify current), and link your wallet to your node. Staking rewards flow to that wallet address.</p></div>
     <div class="step"><h3>Configure services</h3><p>Choose what your node sells: GPU compute, VPN exit, storage, rendering. Set your own per-minute prices — check the <a href="compare.html">comparison page</a> to position against Vast.ai rates.</p></div>
     <div class="step"><h3>Enable idle mining</h3><p>Add an Idle Job (e.g. XMR via xmrig) so the node mines automatically when no rental is active and yields instantly when one starts. Unrented ≠ unpaid.</p></div>
-    <div class="step"><h3>Stay reliable</h3><p>Uptime is your reputation score — it's on-chain and renters see it. Hold 75%+ over 30 days (per the whitepaper) and your node keeps its staking rewards; dip below and rewards pause.</p></div>
+    <div class="step"><h3>Stay reliable</h3><p>Uptime is your reputation score — it's on-chain and renters see it. If you stake, hold 75%+ over 30 days (per the whitepaper) to keep your staking rewards; dip below and rewards pause.</p></div>
   </div>
 </section>
 
@@ -65,7 +65,7 @@
     <div class="calc-out">
       <div class="big" id="o-net">$0</div>
       <div class="sub">estimated net / month &nbsp;·&nbsp; <span id="o-net-octa">—</span></div>
-      <div class="sub" style="margin-top:10px">Gross <span id="o-gross">$0</span> &nbsp;·&nbsp; Power <span id="o-power">$0</span> &nbsp;·&nbsp; 100k OCTA stake ≈ <span id="o-stake">$0</span></div>
+      <div class="sub" style="margin-top:10px">Gross <span id="o-gross">$0</span> &nbsp;·&nbsp; Power <span id="o-power">$0</span> &nbsp;·&nbsp; optional 100k OCTA stake ≈ <span id="o-stake">$0</span> <span style="font-size:.8em">(only if you stake for rewards)</span></div>
     </div>
     <p class="calc-note" id="o-note"></p>
   </div>
