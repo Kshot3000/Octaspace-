@@ -146,7 +146,7 @@ td .tag{display:inline-block;font-size:.75rem;font-weight:700;padding:3px 10px;b
 .mission li strong{color:var(--txt)}
 
 /* footer */
-footer{border-top:1px solid var(--line);margin-top:60px;padding:36px 0;color:var(--muted);font-size:.88rem}
+footer{position:relative;z-index:1;border-top:1px solid var(--line);margin-top:60px;padding:36px 0;color:var(--muted);font-size:.88rem;background:rgba(4,3,10,.84);backdrop-filter:blur(10px)}
 .foot-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
 .foot-grid .donate code{background:#000;border:1px solid var(--line);border-radius:6px;padding:2px 8px;
   font-size:.78rem;color:var(--gold);word-break:break-all}

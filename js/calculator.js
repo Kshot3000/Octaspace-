@@ -36,9 +36,9 @@
     set("o-stake", usd(stakeCost));
     var note = document.getElementById("o-note");
     if(note){
-      note.textContent = "Assumes " + util + "% rental utilization at " + usd(priceHr) +
+      note.textContent = "Assumes " + util + "% rental utilization at " + usd(priceHr, 2) +
         "/GPU-hr across " + gpus + " GPU" + (gpus>1?"s":"") +
-        ", idle-mining fallback while unrented, and " + usd(elecRate) + "/kWh power. " +
+        ", idle-mining fallback while unrented, and " + usd(elecRate, 2) + "/kWh power. " +
         "OCTA at " + usd(octaPrice,4) + ". Rental demand is the big unknown — treat this as a scenario planner, not a promise.";
     }
     var uv = document.getElementById("c-util-val");

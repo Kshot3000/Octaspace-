@@ -3,7 +3,8 @@
  * Layered canvas FX behind all content:
  *  - two giant RTX 5090 GPUs with spinning fans, purple glow, idle bobbing
  *  - falling tokens: OCTA (dark coin, purple bars, silver ring — like the
- *    real token), ETH diamond, USDC coin — with sway + 3D flip
+ *    real token), ETH and USDC in theme-tinted dark glass (no brand blues)
+ *    — with sway + 3D flip
  *  - drifting energy dust for depth
  *  - periodic lightning strikes with branches + screen flash
  *
@@ -271,31 +272,37 @@
     if (k.type === "OCTA") {
       drawOCTA(s);
     } else if (k.type === "ETH") {
-      ctx.shadowColor = "rgba(160,190,230,0.8)";
+      // dark-glass diamond, silver-lavender facets — theme-tinted, no brand blue
+      ctx.shadowColor = "rgba(168,85,247,0.8)";
       ctx.shadowBlur = 12;
+      var eg = ctx.createLinearGradient(0, -s, 0, s);
+      eg.addColorStop(0, "#2b2838"); eg.addColorStop(1, "#100e18");
       ctx.beginPath();
       ctx.moveTo(0, -s); ctx.lineTo(s * 0.62, 0); ctx.lineTo(0, s); ctx.lineTo(-s * 0.62, 0);
       ctx.closePath();
-      ctx.fillStyle = "#9db4d8"; ctx.fill();
+      ctx.fillStyle = eg; ctx.fill();
       ctx.shadowBlur = 0;
       ctx.beginPath();
       ctx.moveTo(0, -s); ctx.lineTo(s * 0.62, 0); ctx.lineTo(-s * 0.62, 0);
       ctx.closePath();
-      ctx.fillStyle = "#d9e6f8"; ctx.fill();
+      ctx.fillStyle = "#cfc9e8"; ctx.fill();
       ctx.beginPath();
       ctx.moveTo(0, -s); ctx.lineTo(s * 0.62, 0); ctx.lineTo(0, s); ctx.lineTo(-s * 0.62, 0);
       ctx.closePath();
       ctx.lineWidth = Math.max(1, s * 0.06);
-      ctx.strokeStyle = "rgba(255,255,255,0.5)"; ctx.stroke();
+      ctx.strokeStyle = "rgba(220,200,255,0.55)"; ctx.stroke();
     } else { // USDC
-      ctx.shadowColor = "rgba(60,130,220,0.8)";
+      // dark-glass coin, silver ring, light glyph — theme-tinted, no brand blue
+      ctx.shadowColor = "rgba(168,85,247,0.8)";
       ctx.shadowBlur = 12;
+      var ug = ctx.createRadialGradient(0, 0, s * 0.15, 0, 0, s);
+      ug.addColorStop(0, "#2b2b33"); ug.addColorStop(1, "#0c0c10");
       ctx.beginPath(); ctx.arc(0, 0, s, 0, TAU);
-      ctx.fillStyle = "#2775ca"; ctx.fill();
+      ctx.fillStyle = ug; ctx.fill();
       ctx.shadowBlur = 0;
       ctx.lineWidth = Math.max(1.5, s * 0.09);
-      ctx.strokeStyle = "rgba(255,255,255,0.55)"; ctx.stroke();
-      ctx.fillStyle = "#fff";
+      ctx.strokeStyle = "rgba(223,225,232,0.6)"; ctx.stroke();
+      ctx.fillStyle = "#dfe3ee";
       ctx.font = "800 " + (s * 0.62).toFixed(0) + "px Inter, system-ui, sans-serif";
       ctx.textAlign = "center"; ctx.textBaseline = "middle";
       ctx.fillText("$", 0, s * 0.04);
