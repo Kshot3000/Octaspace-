@@ -110,10 +110,27 @@
       .catch(function(){ if(note) note.textContent = "live feed unavailable"; });
   }
 
+  // Live total OCTA staked network-wide (earn.html staking card).
+  function loadStaked(){
+    var el = document.getElementById("net-staked");
+    if(!el) return; // page has no staking stat
+    var note = document.getElementById("net-staked-note");
+    fetch("https://api.octa.computer/network")
+      .then(function(r){ if(!r.ok) throw new Error("octa "+r.status); return r.json(); })
+      .then(function(j){
+        var staked = (j && typeof j.staked === "number") ? j.staked : null;
+        if(staked == null) throw new Error("no staked figure");
+        el.textContent = staked.toLocaleString("en-US",{maximumFractionDigits:0});
+        if(note) note.textContent = "live via api.octa.computer";
+      })
+      .catch(function(){ if(note) note.textContent = "live figure unavailable"; });
+  }
+
   function init(){
     load();
     loadMarketplace();
     loadNetwork();
+    loadStaked();
   }
 
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);
