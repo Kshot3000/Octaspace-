@@ -54,7 +54,13 @@ nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
 .nav-links a.active{color:var(--txt);background:rgba(192,38,211,.14)}
 .nav-links a.cta{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);color:#fff;backdrop-filter:blur(8px)}
 .nav-links a.cta:hover{background:rgba(255,255,255,.13);filter:none}
-@media(max-width:720px){.nav-links a:not(.cta){display:none}}
+/* mobile: nav links become a scrollable second row instead of vanishing */
+@media(max-width:720px){
+  .nav-in{flex-wrap:wrap;height:auto;padding:12px 0;row-gap:10px}
+  .nav-links{width:100%;overflow-x:auto;padding-bottom:4px;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links a{flex:0 0 auto;white-space:nowrap}
+}
 
 /* hero */
 .hero{padding:84px 0 60px;text-align:center;position:relative}
