@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sandbox On-Ramp Demo — fiat → USDC → OCTA (simulation) | OctaSpace Hub</title>
+<meta name="description" content="Sandbox simulation of the RFC-001 on-ramp flow: mock fiat-to-USDC quote and simulated USDC-to-OCTA swap. No real money moves.">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.sandbox-bar{background:repeating-linear-gradient(-45deg,#2a1400,#2a1400 18px,#241100 18px,#241100 36px);
+  border-bottom:2px solid var(--gold);color:var(--gold);text-align:center;
+  font-weight:800;font-size:.95rem;letter-spacing:.06em;padding:12px 16px;position:sticky;top:64px;z-index:40}
+.sandbox-bar .sub{display:block;font-weight:600;font-size:.78rem;letter-spacing:0;color:var(--muted);margin-top:2px}
+.wizard{max-width:760px;margin:0 auto}
+.wstep{display:none}
+.wstep.on{display:block;animation:fadein .3s ease}
+@keyframes fadein{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.step-tag{display:inline-block;font-size:.75rem;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--cyan);border:1px solid rgba(56,225,255,.4);border-radius:999px;padding:4px 14px;margin-bottom:14px}
+.quote{margin-top:20px;background:#05070f;border:1px solid rgba(56,225,255,.3);border-radius:12px;padding:20px}
+.quote h4{font-size:.9rem;color:var(--muted);margin-bottom:12px;text-transform:uppercase;letter-spacing:.08em}
+.qrow{display:flex;justify-content:space-between;gap:12px;padding:8px 0;border-bottom:1px dashed rgba(120,160,255,.14);font-size:.95rem}
+.qrow:last-child{border-bottom:none}
+.qrow .k{color:var(--muted)}
+.qrow .v{font-weight:700;text-align:right}
+.qrow.total .v{font-size:1.35rem;background:linear-gradient(120deg,var(--cyan),var(--violet));
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.qnote{font-size:.8rem;color:var(--muted);margin-top:12px}
+.fakehash{font-family:ui-monospace,Menlo,Consolas,monospace;background:#05070f;border:1px dashed var(--gold);
+  border-radius:10px;padding:12px 16px;word-break:break-all;color:var(--gold);font-size:.9rem;margin:14px 0}
+.edu{background:rgba(255,200,87,.05);border:1px solid rgba(255,200,87,.35);border-radius:var(--radius);padding:24px;margin-top:28px}
+.edu h3{color:var(--gold);margin-bottom:10px}
+.edu li{margin:8px 0 8px 20px;color:var(--muted);font-size:.92rem}
+.edu li strong{color:var(--txt)}
+.btn-sim{background:linear-gradient(135deg,var(--gold),#ff9d3c);color:#1a0e00;font-weight:800;
+  border:none;border-radius:12px;padding:14px 30px;font-size:1rem;cursor:pointer;margin-top:18px}
+.btn-sim:hover{filter:brightness(1.08)}
+.btn-sim:disabled{opacity:.5;cursor:not-allowed}
+.err{color:var(--red);font-size:.88rem;margin-top:10px;min-height:1.4em}
+.price-line{font-size:.85rem;color:var(--muted);margin-top:10px}
+.price-line strong{color:var(--cyan)}
+.reset-link{background:none;border:none;color:var(--muted);font-size:.85rem;cursor:pointer;margin-top:16px;text-decoration:underline}
+</style>
+</head>
+<body>
+<nav><div class="wrap nav-in">
+  <a class="brand" href="index.html"><span class="dot"></span>OctaSpace Hub</a>
+  <div class="nav-links">
+    <a data-page="index" href="index.html">Mission</a>
+    <a data-page="compare" href="compare.html">vs Vast.ai &amp; Salad</a>
+    <a data-page="earn" href="earn.html">Earn as Provider</a>
+    <a data-page="build" href="build.html">Build</a>
+    <a data-page="rfc" href="rfc-base-fiat.html">RFC: Base + Fiat</a>
+    <a data-page="onramp" href="onramp-demo.html">On-ramp demo</a>
+    <a class="cta" href="https://octa.space" target="_blank" rel="noopener">octa.space ↗</a>
+  </div>
+</div></nav>
+
+<div class="sandbox-bar" role="alert">
+  ⚠️ SANDBOX DEMO — NO REAL MONEY MOVES · NO REAL TOKENS · EVERYTHING BELOW IS SIMULATED
+  <span class="sub">A community UX prototype for <a href="rfc-base-fiat.html" style="color:var(--gold)">RFC-001</a>. Unofficial. Not affiliated with the OctaSpace team or any ramp provider.</span>
+</div>
+
+<div class="wrap">
+<header class="hero" style="padding:56px 0 36px">
+  <span class="kicker">RFC-001 · Phase 1 prototype</span>
+  <h1>On-ramp widget <span class="grad">demo</span></h1>
+  <p class="lead">What "buy OCTA with a card" would feel like: a mock fiat → USDC on Base quote, then a simulated USDC → OCTA swap. Click through it — nothing here touches a blockchain, a bank, or a real ramp provider.</p>
+</header>
+
+<div class="wizard">
+
+  <!-- STEP 1 -->
+  <section class="wstep on" id="step1" style="padding-top:0">
+    <div class="calc">
+      <span class="step-tag">Step 1 · Simulated</span>
+      <h2 style="margin-bottom:6px">Mock fiat → USDC on Base</h2>
+      <p class="qnote" style="margin-top:0">Pretend the widget below is a ramp provider's staging environment. Enter an amount, pick a provider, and see an <strong>illustrative</strong> fee breakdown.</p>
+      <div class="calc-grid" style="margin-top:18px">
+        <div class="field">
+          <label for="fiat-amount">You pay (USD)</label>
+          <input id="fiat-amount" type="number" min="1" max="10000" step="1" value="100" inputmode="decimal" aria-describedby="fee-note">
+        </div>
+        <div class="field">
+          <label for="ramp-provider">Mock ramp provider</label>
+          <select id="ramp-provider">
+            <option value="transak">Transak (mock)</option>
+            <option value="moonpay">MoonPay (mock)</option>
+            <option value="coinbase">Coinbase Onramp (mock)</option>
+            <option value="banxa">Banxa (mock)</option>
+          </select>
+        </div>
+      </div>
+      <button class="btn-sim" id="btn-quote1">Simulate purchase</button>
+      <div class="err" id="err1" aria-live="polite"></div>
+      <div class="quote" id="quote1" hidden aria-live="polite">
+        <h4>Illustrative quote — <span id="q1-provider">Transak</span> (staging simulation)</h4>
+        <div class="qrow"><span class="k">You pay</span><span class="v" id="q1-pay">$100.00</span></div>
+        <div class="qrow"><span class="k">Provider fee (<span id="q1-feepct">0.99</span>% — illustrative)</span><span class="v" id="q1-fee">−$0.99</span></div>
+        <div class="qrow"><span class="k">Card processing (illustrative)</span><span class="v" id="q1-card">−$0.50</span></div>
+        <div class="qrow"><span class="k">Base network fee (estimate)</span><span class="v">−$0.05</span></div>
+        <div class="qrow total"><span class="k">You receive (simulated)</span><span class="v" id="q1-usdc">98.46 USDC</span></div>
+        <p class="qnote" id="fee-note">Fees are invented for this demo — real providers publish their own schedules, and production quotes come from the provider's live API. In production this step would also include the provider's KYC check.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 2 -->
+  <section class="wstep" id="step2" style="padding-top:0">
+    <div class="calc">
+      <span class="step-tag">Step 2 · Simulated</span>
+      <h2 style="margin-bottom:6px">Simulated USDC → OCTA swap</h2>
+      <p class="qnote" style="margin-top:0">In the RFC design, an aggregator swaps your USDC for OCTA on Base. <strong>No official OCTA-on-Base contract exists yet</strong> — so this step is pure math, using the <strong>live OCTA price</strong> from CoinGecko to keep the numbers honest. See <a href="rfc-base-fiat.html">RFC-001</a> for the canonical-token checklist.</p>
+      <p class="price-line">Live OCTA reference price: <strong id="octa-ref">loading…</strong> <span id="octa-ref-note"></span></p>
+      <button class="btn-sim" id="btn-quote2">Simulate swap</button>
+      <div class="err" id="err2" aria-live="polite"></div>
+      <div class="quote" id="quote2" hidden aria-live="polite">
+        <h4>Simulated swap quote (not executable)</h4>
+        <div class="qrow"><span class="k">Swap</span><span class="v" id="q2-in">98.46 USDC</span></div>
+        <div class="qrow"><span class="k">Simulated DEX fee (0.3% — illustrative)</span><span class="v" id="q2-fee">−0.30 USDC</span></div>
+        <div class="qrow"><span class="k">OCTA reference price</span><span class="v" id="q2-price">$0.1269</span></div>
+        <div class="qrow total"><span class="k">You receive (simulated)</span><span class="v" id="q2-octa">— OCTA</span></div>
+        <p class="qnote">The swap math uses a real price feed, but there is no contract to swap against — no official OCTA token on Base has been deployed or announced. This number is what the swap <em>would</em> yield once Phase 2 of the RFC ships.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEP 3 -->
+  <section class="wstep" id="step3" style="padding-top:0">
+    <div class="calc">
+      <span class="step-tag">Step 3 · Simulated receipt</span>
+      <h2 style="margin-bottom:6px">Mock confirmation</h2>
+      <p class="qnote" style="margin-top:0">If this were real, you'd be looking at a BaseScan link. Instead:</p>
+      <div class="fakehash" id="fake-hash">0xSIMULATED…</div>
+      <p class="qnote"><strong style="color:var(--gold)">Simulated — not a real transaction.</strong> This hash was invented in your browser. It exists on no blockchain and represents no movement of funds.</p>
+      <div class="quote" aria-live="polite">
+        <h4>Demo summary</h4>
+        <div class="qrow"><span class="k">Paid (simulated)</span><span class="v" id="sum-pay">$100.00</span></div>
+        <div class="qrow"><span class="k">Via (simulated)</span><span class="v" id="sum-provider">Transak</span></div>
+        <div class="qrow"><span class="k">Received (simulated)</span><span class="v" id="sum-octa">— OCTA</span></div>
+      </div>
+      <button class="reset-link" id="btn-reset">↺ Start the demo over</button>
+    </div>
+
+    <div class="edu">
+      <h3>📚 What the production version needs</h3>
+      <p class="qnote" style="margin-top:0">This demo hand-waves the hard parts. Each one is a real deliverable in <a href="rfc-base-fiat.html">RFC-001</a>:</p>
+      <ul>
+        <li><strong>Team KYB + commercial ramp agreement.</strong> A community page can't list OCTA as a buyable asset — only the OctaSpace team can complete a provider's business verification and get OCTA approved. (RFC Phase 3)</li>
+        <li><strong>Official Base contract.</strong> The team deploys the canonical OCTA token on Base, verifies it on BaseScan, and announces it from official channels — that's what kills the copycat "OCTA" scam tokens. (RFC Phase 2)</li>
+        <li><strong>Real API keys + sandbox testing.</strong> Ramp widgets run on provider-issued keys; production needs the provider's approval, webhook handling, and compliance review — none of which a demo can shortcut.</li>
+        <li><strong>KYC stays with the provider.</strong> The whole point of the design: the licensed ramp handles identity checks and money transmission, so OctaSpace never touches user fiat directly.</li>
+      </ul>
+    </div>
+  </section>
+
+</div>
+</div>
+
+<footer><div class="wrap">
+  <div class="foot-grid">
+    <div>
+      <strong style="color:var(--txt)">OctaSpace Hub</strong><br>
+      A community project by <a href="https://x.com/kshot9000" target="_blank" rel="noopener">@kshot9000</a> · <span data-year></span>
+    </div>
+    <div class="donate">
+      Support the mission:<br>
+      <code title="OCTA / ETH — Kyle's personal address">0x4b6f3BC697D9dAF3e8dE182aEc56eD208B9087f1</code><br>
+      <span style="font-size:.78rem">OCTA / ETH ↑ (Kyle's personal address)</span><br>
+      <code title="PRL">prl1p62v09vuzyd8kdz9l23jaf3kph4wwx6jqcmhkkhg8lhr2qlxky8psu3zw9d</code><br>
+      <span style="font-size:.78rem">PRL ↑</span><br>
+      <span style="font-size:.82rem"><a href="https://x.com/kshot9000" target="_blank" rel="noopener">X: @kshot9000</a> ·
+      <a href="https://github.com/Kshot3000" target="_blank" rel="noopener">GitHub: Kshot3000</a></span>
+    </div>
+  </div>
+  <p class="disclaimer">Unofficial community project. Not affiliated with the OctaSpace team, Transak, MoonPay, Coinbase, or Banxa. This page is a simulation: no real money moves, no real tokens are issued, and fee figures are illustrative estimates, not live quotes.</p>
+</div></footer>
+<script src="js/app.js"></script>
+<script src="js/onramp-demo.js"></script>
+</body>
+</html>
