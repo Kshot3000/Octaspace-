@@ -68,7 +68,7 @@
   <p class="lead">A concrete, buildable spec for bringing OCTA to Base and giving everyday users a way to buy in with a credit card — researched from public sources, with honest trade-offs and a phased plan the team can actually execute.</p>
   <div class="rfc-meta">
     <span class="pill num">RFC-001</span>
-    <span class="pill draft">Status: DRAFT v0.1</span>
+    <span class="pill draft">Status: DRAFT v0.3</span>
     <span class="pill">2026-09-27</span>
     <span class="pill">Author: community (@kshot9000)</span>
     <span class="pill">Seeking: OctaSpace team feedback</span>
@@ -114,7 +114,7 @@
   <h3>Fiat on/off ramp</h3>
   <ul>
     <li><strong style="color:var(--txt)">No fiat on-ramp or off-ramp product exists, and none is announced.</strong> No Transak / MoonPay / Banxa integration appears in any official channel.</li>
-    <li><strong style="color:var(--txt)">Zebec partnership (July 29, 2025)</strong> — the only official fiat-adjacent integration: Zebec integrated the OctaSpace chain into its Silver &amp; Carbon Mastercard debit cards, letting holders load and spend OCTA at Mastercard merchants; a co-branded "Zebec Black x OCTA" card was described as in development. Scope note: this is <strong style="color:var(--txt)">spend-only</strong> — you cannot buy OCTA with fiat through it, and it is not a bank-withdrawal rail. Whether the co-branded card shipped is unverified.</li>
+    <li><strong style="color:var(--txt)">Zebec partnership (July 29, 2025)</strong> — the only official fiat-adjacent integration: Zebec integrated the OctaSpace chain into its Silver &amp; Carbon Mastercard debit cards, letting holders load and spend OCTA at Mastercard merchants; a co-branded "Zebec Black x OCTA" card was described as in development. Scope note: this is <strong style="color:var(--txt)">spend-only</strong> — you cannot buy OCTA with fiat through it, and it is not a bank-withdrawal rail. Co-branded card status: re-checked 2026-09-28 — no public evidence it has shipped; every source found (including <a href="https://zebec.io/blog/zebec-integrates-15th-chain-on-silver-carbon-cards-launches-strategic-partnership-with-octaspace" target="_blank" rel="noopener">Zebec's own announcement</a>) still lists it as \"in development\". The Silver &amp; Carbon integration is the live spend path today.</li>
     <li><strong style="color:var(--txt)">Third-party only:</strong> Bitget lists OCTA and offers card/bank buys routed through Alchemy Pay, Banxa, Mercuryo, and Simplex — that is Bitget's gateway infrastructure, not OctaSpace's.</li>
     <li>Platform deposits today: OctaSpace Cube accepts crypto deposits via Web3 wallets. No fiat rails.</li>
   </ul>
@@ -279,7 +279,7 @@
   <div class="sec-head"><h2>Open questions for the OctaSpace team</h2><p>Honest framing: our research found no public evidence of in-progress Base or fiat-ramp work — if it's happening in Discord/Telegram, we'd love a pointer so this RFC targets reality instead of guessing.</p></div>
   <div class="q"><strong>1. Is a Base deployment actually on the roadmap?</strong> If yes, which token model are you leaning toward (bridged ERC-20, OFT, or via wOCTA)?</div>
   <div class="q"><strong>2. Has a fiat-ramp vendor been evaluated or selected?</strong> If Transak/MoonPay/Coinbase conversations exist, the Phase 1 demo can target the chosen provider's widget.</div>
-  <div class="q"><strong>3. What's the status of the Zebec Black x OCTA co-branded card?</strong> "In development" as of July 2025 — did it ship?</div>
+  <div class="q"><strong>3. What's the status of the Zebec Black x OCTA co-branded card?</strong> \"In development\" as of July 2025 — did it ship?<br><span style="font-size:.85rem;color:var(--muted)">Community check 2026-09-28: no public launch evidence found; still listed as \"in development\" everywhere it appears. If it quietly shipped, a pointer from the team would be welcome.</span></div>
   <div class="q"><strong>4. Would you accept community PRs for Base SDK helpers</strong> (viem-based, testnet-first) against the official SDK repos?</div>
   <div class="q"><strong>5. Will you publish and maintain a canonical token list</strong> once a Base contract exists, so wallets resolve the real token?</div>
   <p style="margin-top:18px">Team members can reach the author via <a href="https://x.com/kshot9000" target="_blank" rel="noopener">@kshot9000</a> or <a href="https://github.com/Kshot3000" target="_blank" rel="noopener">GitHub</a>. This RFC is a living document — it will be revised as answers come in.</p>
@@ -288,6 +288,7 @@
 <section id="changelog">
   <div class="sec-head"><h2>Changelog</h2></div>
   <ul>
+    <li><strong style="color:var(--txt)">v0.3 — 2026-09-28:</strong> Fixed the header status pill (still said v0.1). Researched the Zebec Black x OCTA co-branded card status: no public evidence it has shipped — still "in development" per every source found, so the Silver &amp; Carbon integration remains the live spend path; annotated status quo and open question 3.</li>
     <li><strong style="color:var(--txt)">v0.2 — 2026-09-28:</strong> Verified and documented an aggregator mislabeling a copycat: TheBitTimes' page now asserts the 0xd2cedc7c…805 contract is the "official" OctaSpace contract (see scam-token warning); re-verified no official Base token exists.</li>
     <li><strong style="color:var(--txt)">v0.1 — 2026-09-27:</strong> Initial draft. Research findings, three Base design options with recommendation, four-provider ramp comparison, phased plan, scam-token warning list, SDK scope, open questions.</li>
   </ul>
