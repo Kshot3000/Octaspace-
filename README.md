@@ -21,7 +21,7 @@ Community mission control for **OctaSpace** — helping the decentralized GPU cl
 ## Support
 
 - OCTA / ETH: `0x4b6f3BC697D9dAF3e8dE182aEc56eD208B9087f1`
-- PRL: `prl1p62v09vuzyd8kdz9l23jaf3kph4wwx6jqcmhkkhg8lhr2qlxky8psu3zw9d`
+- BTC: `3GnR7TWBXAB3pPztBWpNF4LMNEX5yX8vZK`
 - X: [@kshot9000](https://x.com/kshot9000) · GitHub: [Kshot3000](https://github.com/Kshot3000)
 
 Unofficial community project — not affiliated with the OctaSpace team, Vast.ai, or Salad.
