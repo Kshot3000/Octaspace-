@@ -1,14 +1,16 @@
-/* OctaSpace Hub — mission control theme */
+/* OctaSpace Hub — official octaspace-inspired theme: deep-space navy, electric blue brand, logo magenta accents */
 :root{
-  --bg:#05070f;
-  --bg2:#0a0e1c;
-  --card:#0d1326;
-  --card2:#111a33;
-  --line:rgba(120,160,255,.14);
-  --txt:#e8edf7;
-  --muted:#9aa7c7;
+  --bg:#04060d;
+  --bg2:#080d18;
+  --card:#0a1120;
+  --card2:#0e1628;
+  --line:rgba(90,140,255,.15);
+  --txt:#f2f5fa;
+  --muted:#8e99b0;
+  --blue:#2f7bff;
   --cyan:#38e1ff;
   --violet:#8b7bff;
+  --magenta:#d11b9c;
   --gold:#ffc857;
   --green:#3ddc84;
   --red:#ff6b6b;
@@ -26,29 +28,32 @@ body{
 body::before{
   content:"";position:fixed;inset:0;z-index:-1;
   background:
-    radial-gradient(900px 500px at 15% -5%, rgba(139,123,255,.14), transparent 60%),
+    radial-gradient(900px 500px at 15% -5%, rgba(47,123,255,.16), transparent 60%),
     radial-gradient(800px 500px at 90% 10%, rgba(56,225,255,.10), transparent 60%),
-    radial-gradient(700px 600px at 50% 110%, rgba(56,225,255,.06), transparent 60%);
+    radial-gradient(700px 600px at 50% 110%, rgba(139,123,255,.08), transparent 60%),
+    radial-gradient(600px 400px at 85% 95%, rgba(209,27,156,.06), transparent 60%);
 }
+/* live animated background canvas (js/fx-bg.js) — sits behind everything */
+#fx-bg{position:fixed;inset:0;z-index:-2;pointer-events:none}
 a{color:var(--cyan);text-decoration:none}
 a:hover{text-decoration:underline}
 .wrap{max-width:1140px;margin:0 auto;padding:0 22px}
 
 /* nav */
 nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
-  background:rgba(5,7,15,.78);border-bottom:1px solid var(--line)}
+  background:rgba(4,6,13,.78);border-bottom:1px solid var(--line)}
 .nav-in{display:flex;align-items:center;justify-content:space-between;height:64px}
 .brand{display:flex;align-items:center;gap:10px;font-weight:800;font-size:1.15rem;color:var(--txt)}
 .brand:hover{text-decoration:none}
 .brand .dot{width:26px;height:26px;border-radius:8px;
-  background:conic-gradient(from 40deg,var(--cyan),var(--violet),var(--cyan));
-  box-shadow:0 0 18px rgba(56,225,255,.5)}
+  background:conic-gradient(from 40deg,#2f7bff,#8b7bff,#d11b9c,#2f7bff);
+  box-shadow:0 0 18px rgba(47,123,255,.55)}
 .nav-links{display:flex;gap:6px;align-items:center}
 .nav-links a{color:var(--muted);padding:8px 14px;border-radius:9px;font-size:.95rem;font-weight:600}
 .nav-links a:hover{color:var(--txt);background:rgba(120,160,255,.08);text-decoration:none}
 .nav-links a.active{color:var(--txt);background:rgba(56,225,255,.12)}
-.nav-links a.cta{background:linear-gradient(135deg,var(--cyan),var(--violet));color:#04121a}
-.nav-links a.cta:hover{filter:brightness(1.1)}
+.nav-links a.cta{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff}
+.nav-links a.cta:hover{filter:brightness(1.12)}
 @media(max-width:720px){.nav-links a:not(.cta){display:none}}
 
 /* hero */
@@ -57,18 +62,18 @@ nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
   color:var(--cyan);border:1px solid rgba(56,225,255,.35);border-radius:999px;
   padding:6px 16px;margin-bottom:22px;background:rgba(56,225,255,.06)}
 .hero h1{font-size:clamp(2.2rem,5.5vw,3.8rem);line-height:1.12;font-weight:800;max-width:820px;margin:0 auto 18px}
-.hero h1 .grad{background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero h1 .grad{background:linear-gradient(120deg,#6ea8ff,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
 .hero p.lead{color:var(--muted);font-size:1.15rem;max-width:680px;margin:0 auto 32px}
 .btn-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap}
 .btn{display:inline-block;padding:13px 28px;border-radius:12px;font-weight:700;font-size:1rem;border:1px solid transparent}
 .btn:hover{text-decoration:none;transform:translateY(-1px)}
-.btn-primary{background:linear-gradient(135deg,var(--cyan),var(--violet));color:#04121a}
+.btn-primary{background:linear-gradient(135deg,var(--blue),var(--cyan));color:#fff}
 .btn-ghost{border-color:var(--line);color:var(--txt);background:rgba(120,160,255,.05)}
 
 /* stat strip */
 .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin:44px 0}
 .stat{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:18px;text-align:center}
-.stat .v{font-size:1.6rem;font-weight:800;background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+.stat .v{font-size:1.6rem;font-weight:800;background:linear-gradient(120deg,#6ea8ff,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
 .stat .l{font-size:.82rem;color:var(--muted);margin-top:4px}
 .stat .v.neg{background:none;color:var(--red);-webkit-text-fill-color:var(--red)}
 
@@ -103,25 +108,25 @@ td .tag{display:inline-block;font-size:.75rem;font-weight:700;padding:3px 10px;b
 .steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:18px;counter-reset:step}
 .step{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:26px;position:relative}
 .step::before{counter-increment:step;content:counter(step);position:absolute;top:-16px;left:22px;
-  width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--violet));
-  color:#04121a;font-weight:800;display:flex;align-items:center;justify-content:center}
+  width:34px;height:34px;border-radius:50%;background:linear-gradient(135deg,var(--blue),var(--cyan));
+  color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center}
 .step h3{margin:6px 0 10px;font-size:1.05rem}
 .step p,.step li{color:var(--muted);font-size:.93rem}
 .step ul{padding-left:18px}
-.step code{background:#05070f;border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-size:.85rem;color:var(--cyan);display:inline-block;margin:4px 0;word-break:break-all}
+.step code{background:#04060d;border:1px solid var(--line);border-radius:6px;padding:2px 8px;font-size:.85rem;color:var(--cyan);display:inline-block;margin:4px 0;word-break:break-all}
 
 /* calculator */
 .calc{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:30px;max-width:760px;margin:0 auto}
 .calc-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
 @media(max-width:640px){.calc-grid{grid-template-columns:1fr}}
 .field label{display:block;font-size:.85rem;color:var(--muted);margin-bottom:6px;font-weight:600}
-.field input,.field select{width:100%;background:#05070f;border:1px solid var(--line);border-radius:10px;
+.field input,.field select{width:100%;background:#04060d;border:1px solid var(--line);border-radius:10px;
   color:var(--txt);padding:11px 14px;font-size:1rem}
 .field input:focus,.field select:focus{outline:none;border-color:var(--cyan)}
 .field input[type=range]{padding:0;accent-color:var(--cyan)}
 .range-val{font-weight:700;color:var(--cyan)}
-.calc-out{margin-top:24px;background:#05070f;border:1px solid rgba(56,225,255,.3);border-radius:12px;padding:22px;text-align:center}
-.calc-out .big{font-size:2.2rem;font-weight:800;background:linear-gradient(120deg,var(--cyan),var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+.calc-out{margin-top:24px;background:#04060d;border:1px solid rgba(56,225,255,.3);border-radius:12px;padding:22px;text-align:center}
+.calc-out .big{font-size:2.2rem;font-weight:800;background:linear-gradient(120deg,#6ea8ff,var(--cyan));-webkit-background-clip:text;background-clip:text;color:transparent}
 .calc-out .sub{color:var(--muted);font-size:.9rem;margin-top:6px}
 .calc-note{color:var(--muted);font-size:.82rem;margin-top:14px;text-align:center}
 
@@ -142,6 +147,6 @@ td .tag{display:inline-block;font-size:.75rem;font-weight:700;padding:3px 10px;b
 /* footer */
 footer{border-top:1px solid var(--line);margin-top:60px;padding:36px 0;color:var(--muted);font-size:.88rem}
 .foot-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
-.foot-grid .donate code{background:#05070f;border:1px solid var(--line);border-radius:6px;padding:2px 8px;
+.foot-grid .donate code{background:#04060d;border:1px solid var(--line);border-radius:6px;padding:2px 8px;
   font-size:.78rem;color:var(--gold);word-break:break-all}
 .disclaimer{margin-top:18px;font-size:.78rem;opacity:.75}
