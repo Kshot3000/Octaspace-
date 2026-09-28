@@ -1,8 +1,9 @@
-/* fx-bg.js — OctaSpace Hub live background.
+/* fx-bg.js — OctaSpace Hub live background (official octa.space theme).
  *
  * Layered canvas FX behind all content:
- *  - two giant RTX 5090 GPUs with spinning fans, glow and idle bobbing
- *  - falling OCTA / ETH / USDC tokens with sway + 3D flip
+ *  - two giant RTX 5090 GPUs with spinning fans, purple glow, idle bobbing
+ *  - falling tokens: OCTA (dark coin, purple bars, silver ring — like the
+ *    real token), ETH diamond, USDC coin — with sway + 3D flip
  *  - drifting energy dust for depth
  *  - periodic lightning strikes with branches + screen flash
  *
@@ -50,8 +51,8 @@
 
   function makeVignette() {
     vig = ctx.createRadialGradient(W / 2, H * 0.42, Math.min(W, H) * 0.32, W / 2, H * 0.5, Math.max(W, H) * 0.78);
-    vig.addColorStop(0, "rgba(2,4,10,0)");
-    vig.addColorStop(1, "rgba(2,4,10,0.60)");
+    vig.addColorStop(0, "rgba(0,0,0,0)");
+    vig.addColorStop(1, "rgba(0,0,0,0.62)");
   }
 
   function layout() {
@@ -96,12 +97,12 @@
     ctx.translate(cx, cy);
     // housing
     ctx.beginPath(); ctx.arc(0, 0, r, 0, TAU);
-    ctx.fillStyle = "#04070e"; ctx.fill();
+    ctx.fillStyle = "#060509"; ctx.fill();
     ctx.lineWidth = Math.max(2, r * 0.05);
-    ctx.strokeStyle = "rgba(120,170,255,0.35)"; ctx.stroke();
+    ctx.strokeStyle = "rgba(200,150,255,0.35)"; ctx.stroke();
     // spinning blades (thick arc strokes read as turbine blades in motion)
     var blades = 9;
-    ctx.strokeStyle = "rgba(150,195,255,0.72)";
+    ctx.strokeStyle = "rgba(205,165,255,0.72)";
     ctx.lineCap = "round";
     ctx.lineWidth = r * 0.30;
     for (var i = 0; i < blades; i++) {
@@ -112,19 +113,19 @@
     }
     // motion-blur sheen
     ctx.beginPath(); ctx.arc(0, 0, r * 0.60, 0, TAU);
-    ctx.strokeStyle = "rgba(120,180,255,0.10)";
+    ctx.strokeStyle = "rgba(190,140,255,0.10)";
     ctx.lineWidth = r * 0.44; ctx.stroke();
     // hub
     var hg = ctx.createRadialGradient(0, 0, 1, 0, 0, r * 0.22);
-    hg.addColorStop(0, "#bfe0ff");
-    hg.addColorStop(0.45, "#2f7bff");
-    hg.addColorStop(1, "#0a1a3a");
+    hg.addColorStop(0, "#f5d0fe");
+    hg.addColorStop(0.45, "#a855f7");
+    hg.addColorStop(1, "#2a1040");
     ctx.beginPath(); ctx.arc(0, 0, r * 0.22, 0, TAU);
     ctx.fillStyle = hg; ctx.fill();
     ctx.save();
-    ctx.shadowColor = "rgba(90,170,255,0.9)"; ctx.shadowBlur = 10;
+    ctx.shadowColor = "rgba(200,120,255,0.9)"; ctx.shadowBlur = 10;
     ctx.beginPath(); ctx.arc(0, 0, r * 0.07, 0, TAU);
-    ctx.fillStyle = "#d8ecff"; ctx.fill();
+    ctx.fillStyle = "#fae8ff"; ctx.fill();
     ctx.restore();
     ctx.restore();
   }
@@ -138,46 +139,46 @@
     ctx.rotate(tilt);
     ctx.globalAlpha = smallScreen ? 0.50 : 0.62;
 
-    // halo
+    // halo — purple brand glow
     var halo = ctx.createRadialGradient(0, 0, h * 0.2, 0, 0, w * 0.78);
-    halo.addColorStop(0, "rgba(47,123,255,0.20)");
-    halo.addColorStop(1, "rgba(47,123,255,0)");
+    halo.addColorStop(0, "rgba(168,85,247,0.22)");
+    halo.addColorStop(1, "rgba(168,85,247,0)");
     ctx.fillStyle = halo;
     ctx.fillRect(-w * 0.78, -h * 1.3, w * 1.56, h * 2.6);
 
     // shroud
-    ctx.shadowColor = "rgba(47,123,255,0.55)";
+    ctx.shadowColor = "rgba(168,85,247,0.55)";
     ctx.shadowBlur = 34;
     rr(-w / 2, -h / 2, w, h, h * 0.16);
     var shroud = ctx.createLinearGradient(0, -h / 2, 0, h / 2);
-    shroud.addColorStop(0, "#111b32");
-    shroud.addColorStop(0.5, "#0a1120");
-    shroud.addColorStop(1, "#070c17");
+    shroud.addColorStop(0, "#161226");
+    shroud.addColorStop(0.5, "#0c0a16");
+    shroud.addColorStop(1, "#070610");
     ctx.fillStyle = shroud;
     ctx.fill();
     ctx.shadowBlur = 0;
     ctx.lineWidth = 1.5;
-    ctx.strokeStyle = "rgba(110,170,255,0.38)";
+    ctx.strokeStyle = "rgba(200,150,255,0.38)";
     ctx.stroke();
 
     // brushed-metal sheen lines
     ctx.save();
     rr(-w / 2, -h / 2, w, h, h * 0.16);
     ctx.clip();
-    ctx.strokeStyle = "rgba(140,180,255,0.05)";
+    ctx.strokeStyle = "rgba(200,160,255,0.05)";
     ctx.lineWidth = 1;
     for (var sx = -w / 2 + 18; sx < w / 2; sx += 26) {
       ctx.beginPath(); ctx.moveTo(sx, -h / 2); ctx.lineTo(sx - 14, h / 2); ctx.stroke();
     }
     ctx.restore();
 
-    // top light strip
+    // top light strip — magenta
     var strip = ctx.createLinearGradient(-w / 2, 0, w / 2, 0);
-    strip.addColorStop(0, "rgba(56,225,255,0)");
-    strip.addColorStop(0.5, "rgba(56,225,255,0.95)");
-    strip.addColorStop(1, "rgba(139,123,255,0)");
+    strip.addColorStop(0, "rgba(232,121,249,0)");
+    strip.addColorStop(0.5, "rgba(232,121,249,0.95)");
+    strip.addColorStop(1, "rgba(124,58,237,0)");
     ctx.save();
-    ctx.shadowColor = "rgba(56,225,255,0.9)"; ctx.shadowBlur = 12;
+    ctx.shadowColor = "rgba(232,121,249,0.9)"; ctx.shadowBlur = 12;
     ctx.fillStyle = strip;
     rr(-w / 2 + 16, -h / 2 + 9, w - 32, 4, 2);
     ctx.fill();
@@ -187,12 +188,12 @@
     var fs = Math.max(11, h * 0.095);
     ctx.textBaseline = "alphabetic";
     ctx.textAlign = "left";
-    ctx.fillStyle = "rgba(165,195,240,0.85)";
+    ctx.fillStyle = "rgba(225,205,250,0.85)";
     ctx.font = "700 " + fs.toFixed(0) + "px Inter, system-ui, sans-serif";
     ctx.fillText("GEFORCE RTX", -w / 2 + 18, -h / 2 + h * 0.20);
     ctx.textAlign = "right";
     var tg = ctx.createLinearGradient(w / 2 - 90, 0, w / 2 - 18, 0);
-    tg.addColorStop(0, "#6ea8ff"); tg.addColorStop(1, "#38e1ff");
+    tg.addColorStop(0, "#f0abfc"); tg.addColorStop(1, "#c026d3");
     ctx.fillStyle = tg;
     ctx.font = "800 " + (fs * 1.15).toFixed(0) + "px Inter, system-ui, sans-serif";
     ctx.fillText("5090", w / 2 - 18, -h / 2 + h * 0.20);
@@ -203,7 +204,7 @@
     for (var i = 0; i < 3; i++) drawFan(fxs[i], fy, fr, g.fan[i]);
 
     // corner screws
-    ctx.fillStyle = "rgba(150,185,235,0.5)";
+    ctx.fillStyle = "rgba(205,185,245,0.5)";
     var sr = Math.max(2, h * 0.016);
     var mx = w / 2 - 12, my = h / 2 - 12;
     [[-mx, -my], [mx, -my], [-mx, my], [mx, my]].forEach(function (p) {
@@ -227,6 +228,36 @@
     };
   }
 
+  // OCTA — matches the real token: dark coin, purple vertical bars, silver ring
+  function drawOCTA(s) {
+    ctx.shadowColor = "rgba(168,85,247,0.8)";
+    ctx.shadowBlur = 12;
+    var cg = ctx.createRadialGradient(0, 0, s * 0.15, 0, 0, s);
+    cg.addColorStop(0, "#26262e");
+    cg.addColorStop(1, "#0a0a0d");
+    ctx.beginPath(); ctx.arc(0, 0, s, 0, TAU);
+    ctx.fillStyle = cg; ctx.fill();
+    ctx.shadowBlur = 0;
+    // silver ring
+    ctx.lineWidth = Math.max(2, s * 0.11);
+    var rg = ctx.createLinearGradient(-s, -s, s, s);
+    rg.addColorStop(0, "#e8eaef"); rg.addColorStop(0.5, "#9aa0ad"); rg.addColorStop(1, "#dfe1e8");
+    ctx.strokeStyle = rg;
+    ctx.beginPath(); ctx.arc(0, 0, s * 0.93, 0, TAU); ctx.stroke();
+    // purple bars
+    var hs = [0.52, 0.74, 0.96, 0.80, 0.96, 0.74, 0.52];
+    var bw = s * 0.155, gap = s * 0.235;
+    var bg = ctx.createLinearGradient(0, -s, 0, s);
+    bg.addColorStop(0, "#f0abfc"); bg.addColorStop(0.55, "#a855f7"); bg.addColorStop(1, "#6d28d9");
+    ctx.fillStyle = bg;
+    for (var i = 0; i < 7; i++) {
+      var bh = hs[i] * s * 1.06;
+      var bx = (i - 3) * gap;
+      rr(bx - bw / 2, -bh / 2, bw, bh, bw / 2);
+      ctx.fill();
+    }
+  }
+
   function drawToken(k, t) {
     var x = k.x + Math.sin(t * k.swayF + k.ph) * k.swayA;
     var y = k.y, s = k.s;
@@ -236,23 +267,12 @@
     ctx.translate(x, y);
     ctx.scale(flip, 1);
     ctx.globalAlpha = k.a;
-    ctx.shadowBlur = 12;
 
     if (k.type === "OCTA") {
-      ctx.shadowColor = "rgba(80,140,255,0.8)";
-      var og = ctx.createLinearGradient(0, -s, 0, s);
-      og.addColorStop(0, "#3d8bff"); og.addColorStop(1, "#7b6cff");
-      ctx.beginPath(); ctx.arc(0, 0, s, 0, TAU);
-      ctx.fillStyle = og; ctx.fill();
-      ctx.shadowBlur = 0;
-      ctx.lineWidth = Math.max(1.5, s * 0.09);
-      ctx.strokeStyle = "rgba(255,255,255,0.55)"; ctx.stroke();
-      ctx.fillStyle = "#fff";
-      ctx.font = "800 " + (s * 0.40).toFixed(0) + "px Inter, system-ui, sans-serif";
-      ctx.textAlign = "center"; ctx.textBaseline = "middle";
-      ctx.fillText("OCTA", 0, s * 0.04);
+      drawOCTA(s);
     } else if (k.type === "ETH") {
       ctx.shadowColor = "rgba(160,190,230,0.8)";
+      ctx.shadowBlur = 12;
       ctx.beginPath();
       ctx.moveTo(0, -s); ctx.lineTo(s * 0.62, 0); ctx.lineTo(0, s); ctx.lineTo(-s * 0.62, 0);
       ctx.closePath();
@@ -269,6 +289,7 @@
       ctx.strokeStyle = "rgba(255,255,255,0.5)"; ctx.stroke();
     } else { // USDC
       ctx.shadowColor = "rgba(60,130,220,0.8)";
+      ctx.shadowBlur = 12;
       ctx.beginPath(); ctx.arc(0, 0, s, 0, TAU);
       ctx.fillStyle = "#2775ca"; ctx.fill();
       ctx.shadowBlur = 0;
@@ -322,12 +343,12 @@
     if (a <= 0) return;
     ctx.save();
     ctx.lineJoin = "round"; ctx.lineCap = "round";
-    ctx.shadowColor = "rgba(90,160,255,0.85)"; ctx.shadowBlur = 12;
-    ctx.strokeStyle = "rgba(150,200,255," + (a * 0.5).toFixed(3) + ")";
+    ctx.shadowColor = "rgba(190,140,255,0.85)"; ctx.shadowBlur = 12;
+    ctx.strokeStyle = "rgba(210,170,255," + (a * 0.5).toFixed(3) + ")";
     ctx.lineWidth = 1.5;
     for (var i = 0; i < b.branches.length; i++) { boltPath(b.branches[i]); ctx.stroke(); }
     ctx.shadowBlur = 26;
-    ctx.strokeStyle = "rgba(120,180,255," + a.toFixed(3) + ")";
+    ctx.strokeStyle = "rgba(190,140,255," + a.toFixed(3) + ")";
     ctx.lineWidth = 4;
     boltPath(b.pts); ctx.stroke();
     ctx.shadowBlur = 8;
@@ -373,7 +394,7 @@
       var p = dust[i];
       var tw = p.a * (0.6 + 0.4 * Math.sin(p.tw));
       ctx.globalAlpha = tw;
-      ctx.fillStyle = "#9fc4ff";
+      ctx.fillStyle = "#d8b4fe";
       ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, TAU); ctx.fill();
     }
     ctx.globalAlpha = 1;
@@ -385,7 +406,7 @@
     for (i = 0; i < bolts.length; i++) drawBolt(bolts[i]);
     // screen flash
     if (flash > 0.01) {
-      ctx.fillStyle = "rgba(175,215,255," + (flash * 0.20).toFixed(3) + ")";
+      ctx.fillStyle = "rgba(225,195,255," + (flash * 0.20).toFixed(3) + ")";
       ctx.fillRect(0, 0, W, H);
     }
     // vignette keeps text readable at edges
