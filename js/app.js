@@ -12,7 +12,7 @@
   document.querySelectorAll("[data-year]").forEach(function(el){ el.textContent = new Date().getFullYear(); });
 
   // Live OCTA stats
-  var FALLBACK = { price: 0.1149, mcap: 5160000, vol24h: 31300, change24h: 8.33, note: "cached" }; // refreshed 2026-09-28
+  var FALLBACK = { price: 0.1158, mcap: 5199395, vol24h: 4819, change24h: 0.23, note: "cached" }; // refreshed 2026-09-29
 
   function fmtUSD(n, digits){
     if(n == null || isNaN(n)) return "—";
