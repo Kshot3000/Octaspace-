@@ -14,6 +14,11 @@
   var DEX_FEE_PCT = 0.3; // illustrative simulated DEX fee (%)
   var MAX_USD = 10000;
 
+  // Depth honesty: reported on-chain OCTA DEX liquidity is measured in tens of
+  // USD/day — any simulated swap larger than this soft cap could NOT fill near
+  // the reference price on-chain. Warn loudly instead of implying depth exists.
+  var DEPTH_SOFT_CAP_USD = 100;
+
   var state = { usd: 0, usdc: 0, provider: "transak", octaPrice: null };
 
   function $(id){ return document.getElementById(id); }
@@ -95,6 +100,16 @@
     $("q2-fee").textContent = "−" + fmtNum(dexFeeUsdc, 2) + " USDC";
     $("q2-price").textContent = fmtUSD(state.octaPrice, 4);
     $("q2-octa").textContent = fmtNum(octa, 2) + " OCTA";
+    var dw = $("depth-warn");
+    if(state.usdc > DEPTH_SOFT_CAP_USD){
+      dw.innerHTML = "⚠️ <strong>Depth check (real-world):</strong> reported on-chain OCTA liquidity is " +
+        "measured in the <strong>tens of USD per day</strong> — a " + fmtUSD(state.usdc, 2) +
+        " swap could NOT fill near the reference price on-chain, and the 0.3% fee above is illustrative only. " +
+        "A production ramp routes this through CEX fills or chunked conversions instead — see the RFC liquidity research.";
+      dw.hidden = false;
+    } else {
+      dw.hidden = true;
+    }
     $("quote2").hidden = false;
     if($("quote2").scrollIntoView) $("quote2").scrollIntoView({behavior:"smooth", block:"nearest"});
   }
