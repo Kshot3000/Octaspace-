@@ -71,6 +71,7 @@
   </div>
   <div class="calc">
     <div class="calc-grid">
+      <div class="field"><label>GPU model <span style="font-weight:400">(prefills live marketplace rate)</span></label><select id="c-gpu"><option value="">Choose a GPU to prefill the rate…</option></select><span id="c-gpu-hint" style="display:block;font-size:.78rem;color:var(--muted);margin-top:6px"></span></div>
       <div class="field"><label>Your rental price (USD / GPU-hour)</label><input id="c-price" type="number" min="0" step="0.01" value="0.25"></div>
       <div class="field"><label>GPUs</label><input id="c-gpus" type="number" min="1" step="1" value="2"></div>
       <div class="field"><label>Expected rental utilization <span class="range-val" id="c-util-val">40%</span></label><input id="c-util" type="range" min="0" max="100" value="40"></div>
@@ -118,6 +119,6 @@
 </div></footer>
 <script src="js/app.js?v=px1198"></script>
 <script src="js/fx-bg.js?v=c717984" defer></script>
-<script src="js/calculator.js?v=px1198"></script>
+<script src="js/calculator.js?v=px1201"></script>
 </body>
 </html>

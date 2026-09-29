@@ -4,6 +4,81 @@
 
   var STAKE_OCTA = 100000;
 
+  // Baked marketplace snapshot so the GPU prefill works even if the live API
+  // is unreachable. Captured from https://api.octa.computer/network 2026-09-29T21:51Z.
+  var MARKETPLACE_FALLBACK = {
+    captured: "2026-09-29 21:51 UTC",
+    live: false,
+    gpus: {
+      "NVIDIA GeForce RTX 5090": {avg: 0.66, count: 58},
+      "NVIDIA GeForce RTX 3090": {avg: 0.24, count: 48},
+      "NVIDIA GeForce RTX 4090": {avg: 0.43, count: 32},
+      "NVIDIA GeForce RTX 5080": {avg: 0.34, count: 16},
+      "NVIDIA GeForce RTX 5070": {avg: 0.18, count: 8},
+      "NVIDIA H100 80GB HBM3":   {avg: 0.12, count: 8},
+      "NVIDIA GeForce RTX 4070": {avg: 0.24, count: 7},
+      "NVIDIA GeForce RTX 4080": {avg: 0.09, count: 3},
+      "NVIDIA RTX A6000":        {avg: 0.20, count: 2},
+      "NVIDIA A100-SXM4-40GB":   {avg: 0.48, count: 1}
+    }
+  };
+
+  function shortName(name){
+    return name.replace(/^NVIDIA GeForce /,"").replace(/^NVIDIA RTX /,"RTX ").replace(/^NVIDIA /,"");
+  }
+
+  function populateGpuSelect(select, data){
+    select._mpData = data;
+    while(select.options.length > 1) select.remove(1); // keep the placeholder
+    var names = Object.keys(data.gpus).sort(function(a,b){ return data.gpus[b].count - data.gpus[a].count; });
+    names.forEach(function(name){
+      var g = data.gpus[name];
+      if(!g.count) return;
+      var opt = document.createElement("option");
+      opt.value = name;
+      var flag = g.count < 5 ? " · ⚠ few listings" : "";
+      opt.textContent = shortName(name) + " — avg $" + g.avg.toFixed(2) + "/hr · " + g.count + " listings" + flag;
+      select.appendChild(opt);
+    });
+    var hint = document.getElementById("c-gpu-hint");
+    if(hint){
+      hint.textContent = data.live
+        ? "Live marketplace rates via api.octa.computer — averages move with listings."
+        : "Live feed unavailable — showing cached snapshot from " + data.captured + ".";
+    }
+  }
+
+  function bindGpuPrefill(){
+    var select = document.getElementById("c-gpu");
+    if(!select) return;
+    select.addEventListener("change", function(){
+      var data = select._mpData;
+      if(!data) return;
+      var g = data.gpus[select.value];
+      if(!g) return; // placeholder chosen — leave the manual price alone
+      var priceEl = document.getElementById("c-price");
+      if(priceEl) priceEl.value = g.avg.toFixed(2);
+      var hint = document.getElementById("c-gpu-hint");
+      if(hint){
+        hint.textContent = "Prefilled $" + g.avg.toFixed(2) + "/hr from " +
+          (data.live ? "live" : "cached " + data.captured) + " marketplace data — " +
+          g.count + " listing" + (g.count>1?"s":"") + ". Actual rates vary; adjust freely.";
+      }
+      calc();
+    });
+    fetch("https://api.octa.computer/network")
+      .then(function(r){ if(!r.ok) throw new Error("http " + r.status); return r.json(); })
+      .then(function(d){
+        var gpus = {};
+        var raw = (d.marketplace && d.marketplace.gpus) || {};
+        Object.keys(raw).forEach(function(name){
+          gpus[name] = {avg: raw[name].avg_price, count: raw[name].count};
+        });
+        populateGpuSelect(select, {captured: "", live: true, gpus: gpus});
+      })
+      .catch(function(){ populateGpuSelect(select, MARKETPLACE_FALLBACK); });
+  }
+
   function num(id){ var v = parseFloat(document.getElementById(id).value); return isNaN(v) ? 0 : v; }
 
   function calc(){
@@ -13,7 +88,7 @@
     var idleDay   = num("c-idle");         // USD/day per GPU from idle mining fallback
     var powerW    = num("c-power");        // watts per GPU
     var elecRate  = num("c-elec");         // USD per kWh
-    var octaPrice = window.OCTA_PRICE || 0.1198; // fallback if CoinGecko unreachable (re-synced 2026-09-29 ~20:50 UTC to api.octa.computer market_price; matches app.js)
+    var octaPrice = window.OCTA_PRICE || 0.1201; // fallback if CoinGecko unreachable (re-synced 2026-09-29 ~21:51 UTC to api.octa.computer market_price)
 
     var hrsMonth = 730;
     var rentedHrs = hrsMonth * (util/100);
@@ -55,6 +130,7 @@
       if(el) el.addEventListener("input", calc);
     });
     document.addEventListener("octa-price", calc);
+    bindGpuPrefill();
     calc();
   }
 
