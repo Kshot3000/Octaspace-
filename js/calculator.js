@@ -13,7 +13,7 @@
     var idleDay   = num("c-idle");         // USD/day per GPU from idle mining fallback
     var powerW    = num("c-power");        // watts per GPU
     var elecRate  = num("c-elec");         // USD per kWh
-    var octaPrice = window.OCTA_PRICE || 0.1149; // fallback if CoinGecko unreachable (refreshed 2026-09-28)
+    var octaPrice = window.OCTA_PRICE || 0.1158; // fallback if CoinGecko unreachable (refreshed 2026-09-29; matches app.js)
 
     var hrsMonth = 730;
     var rentedHrs = hrsMonth * (util/100);
