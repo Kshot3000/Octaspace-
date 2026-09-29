@@ -1,4 +1,5 @@
-// OctaSpace Hub — shared behavior: live OCTA stats from CoinGecko, nav state, footer year.
+// OctaSpace Hub — shared behavior: OCTA price (CoinGecko, then api.octa.computer
+// market_price, then a baked fallback), live network pulse, nav state, footer year.
 (function(){
   "use strict";
 
@@ -15,7 +16,7 @@
   document.querySelectorAll("[data-year]").forEach(function(el){ el.textContent = new Date().getFullYear(); });
 
   // Live OCTA stats
-  var FALLBACK = { price: 0.1198, mcap: 5199395, vol24h: 4819, change24h: 0.23, note: "cached" }; // price re-synced 2026-09-29 ~20:50 UTC to api.octa.computer market_price ($0.1198; CoinGecko 403 from builder network) — mcap/vol/change carried from this morning's CoinGecko pull
+  var FALLBACK = { price: 0.1190, mcap: 5199395, vol24h: 4819, change24h: 0.23, note: "cached" }; // price re-synced 2026-09-29 ~22:55 UTC to api.octa.computer market_price ($0.1190; CoinGecko 403 from builder network) — mcap/vol/change carried from this morning's CoinGecko pull
 
   function fmtUSD(n, digits){
     if(n == null || isNaN(n)) return "—";
@@ -36,18 +37,19 @@
     var chg = document.getElementById("octa-change");
     if(chg){
       var v = d.change24h;
-      chg.textContent = (v >= 0 ? "+" : "") + v.toFixed(2) + "%";
-      chg.classList.toggle("neg", v < 0);
+      chg.textContent = (v == null || isNaN(v)) ? "—" : (v >= 0 ? "+" : "") + v.toFixed(2) + "%";
+      chg.classList.toggle("neg", v != null && v < 0);
     }
     setText("octa-stake-usd", fmtUSD(d.price * 100000, 0));
     var stakeUsd = fmtUSD(d.price * 100000, 0);
     document.querySelectorAll(".stake-usd-live").forEach(function(el){ el.textContent = stakeUsd; });
     var ts = document.getElementById("octa-updated");
-    if(ts) ts.textContent = d.note === "live"
-      ? "Live via CoinGecko"
+    if(ts) ts.textContent = d.note === "live" ? "Live via CoinGecko"
+      : d.note === "live-octapi" ? "Live via api.octa.computer"
       : "Cached snapshot — live feed unavailable";
-    // expose for calculator
+    // expose for calculator + on-ramp demo
     window.OCTA_PRICE = d.price;
+    window.OCTA_PRICE_NOTE = d.note;
     document.dispatchEvent(new CustomEvent("octa-price", {detail: d}));
   }
   function setText(id, txt){
@@ -66,11 +68,25 @@
           price: o.usd,
           mcap: o.usd_market_cap || null,
           vol24h: o.usd_24h_vol || null,
-          change24h: (o.usd_24h_change == null ? 0 : o.usd_24h_change),
+          change24h: (o.usd_24h_change == null ? null : o.usd_24h_change),
           note: "live"
         });
       })
-      .catch(function(){ /* fallback already rendered */ });
+      .catch(function(){ loadOctaApiPrice(); });
+  }
+
+  // Second price source: api.octa.computer exposes a live market_price and is
+  // already CORS-open for our network-pulse features. Keeps the price live for
+  // visitors whose browser can't reach CoinGecko.
+  function loadOctaApiPrice(){
+    fetch("https://api.octa.computer/network")
+      .then(function(r){ if(!r.ok) throw new Error("octa "+r.status); return r.json(); })
+      .then(function(j){
+        var p = j && typeof j.market_price === "number" ? j.market_price : null;
+        if(!p) throw new Error("no market_price");
+        render({ price: p, mcap: null, vol24h: null, change24h: null, note: "live-octapi" });
+      })
+      .catch(function(){ /* FALLBACK already rendered */ });
   }
 
   // Live OctaSpace marketplace averages (compare.html). Falls back to the

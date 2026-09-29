@@ -19,7 +19,7 @@
   // the reference price on-chain. Warn loudly instead of implying depth exists.
   var DEPTH_SOFT_CAP_USD = 100;
 
-  var state = { usd: 0, usdc: 0, provider: "transak", octaPrice: null };
+  var state = { usd: 0, usdc: 0, provider: "transak", octaPrice: null, priceNote: null };
 
   function $(id){ return document.getElementById(id); }
   function fmtUSD(n, digits){ var d = digits || 2; return "$" + n.toLocaleString("en-US",{minimumFractionDigits:d, maximumFractionDigits:d}); }
@@ -37,15 +37,25 @@
     var el = $("octa-ref"), note = $("octa-ref-note");
     if(state.octaPrice){
       el.textContent = fmtUSD(state.octaPrice, 4);
-      note.textContent = "(live via CoinGecko — used for the simulated swap math only)";
+      note.textContent = state.priceNote === "live" ? "(live via CoinGecko — simulated swap math only)"
+        : state.priceNote === "live-octapi" ? "(live via api.octa.computer — simulated swap math only)"
+        : "(cached snapshot — live feed unavailable; simulated swap math only)";
     }
   }
 
   // Live OCTA price via the hub's shared loader (js/app.js).
   function initPrice(){
-    if(window.OCTA_PRICE){ state.octaPrice = window.OCTA_PRICE; refreshPriceLabel(); }
+    if(window.OCTA_PRICE){
+      state.octaPrice = window.OCTA_PRICE;
+      state.priceNote = window.OCTA_PRICE_NOTE || null; // already rendered by app.js
+      refreshPriceLabel();
+    }
     document.addEventListener("octa-price", function(e){
-      if(e && e.detail && e.detail.price){ state.octaPrice = e.detail.price; refreshPriceLabel(); }
+      if(e && e.detail && e.detail.price){
+        state.octaPrice = e.detail.price;
+        state.priceNote = e.detail.note || null;
+        refreshPriceLabel();
+      }
     });
   }
 

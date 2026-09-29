@@ -130,7 +130,7 @@
     <div class="calc">
       <span class="step-tag">Step 2 · Simulated</span>
       <h2 style="margin-bottom:6px">Simulated USDC → OCTA swap</h2>
-      <p class="qnote" style="margin-top:0">In the RFC design, an aggregator swaps your USDC for OCTA on Base. <strong>No official OCTA-on-Base contract exists yet</strong> — so this step is pure math, using the <strong>live OCTA price</strong> from CoinGecko to keep the numbers honest. See <a href="rfc-base-fiat.html">RFC-001</a> for the canonical-token checklist.</p>
+      <p class="qnote" style="margin-top:0">In the RFC design, an aggregator swaps your USDC for OCTA on Base. <strong>No official OCTA-on-Base contract exists yet</strong> — so this step is pure math, using the live OCTA price to keep the numbers honest. The reference price below shows its live source (CoinGecko, or the OctaSpace API when CoinGecko is unreachable, or a clearly-labeled cached snapshot as a last resort). See <a href="rfc-base-fiat.html">RFC-001</a> for the canonical-token checklist.</p>
       <p class="price-line">Live OCTA reference price: <strong id="octa-ref">loading…</strong> <span id="octa-ref-note"></span></p>
       <button class="btn-sim" id="btn-quote2">Simulate swap</button>
       <div class="err" id="err2" aria-live="polite"></div>
@@ -198,8 +198,8 @@
   </div>
   <p class="disclaimer">Unofficial community project. Not affiliated with the OctaSpace team, Transak, MoonPay, Coinbase, or Banxa. This page is a simulation: no real money moves, no real tokens are issued, and fee figures are illustrative estimates, not live quotes.</p>
 </div></footer>
-<script src="js/app.js?v=px1198"></script>
+<script src="js/app.js?v=px1190"></script>
 <script src="js/fx-bg.js?v=c717984" defer></script>
-<script src="js/onramp-demo.js?v=depth1"></script>
+<script src="js/onramp-demo.js?v=px1190"></script>
 </body>
 </html>
