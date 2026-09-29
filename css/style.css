@@ -73,6 +73,12 @@ nav{position:sticky;top:0;z-index:50;backdrop-filter:blur(14px);
 
 /* hero */
 .hero{padding:84px 0 60px;text-align:center;position:relative}
+/* scrim behind hero copy: the animated canvas (5090 cards, falling coins) drifts
+   behind the headings — this keeps bright art from colliding with the text,
+   especially the gradient headline on narrow viewports. Fades out so the art
+   still shows around the copy. */
+.hero::before{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;
+  background:radial-gradient(ellipse 78% 88% at 50% 42%, rgba(0,0,0,.66), rgba(0,0,0,.22) 58%, transparent 80%)}
 .kicker{display:inline-block;font-size:.8rem;letter-spacing:.22em;text-transform:uppercase;
   color:var(--brand-lt);border:1px solid rgba(192,38,211,.4);border-radius:999px;
   padding:6px 16px;margin-bottom:22px;background:rgba(192,38,211,.07)}
