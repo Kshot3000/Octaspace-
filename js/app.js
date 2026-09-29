@@ -15,7 +15,7 @@
   document.querySelectorAll("[data-year]").forEach(function(el){ el.textContent = new Date().getFullYear(); });
 
   // Live OCTA stats
-  var FALLBACK = { price: 0.1158, mcap: 5199395, vol24h: 4819, change24h: 0.23, note: "cached" }; // refreshed 2026-09-29
+  var FALLBACK = { price: 0.1198, mcap: 5199395, vol24h: 4819, change24h: 0.23, note: "cached" }; // price re-synced 2026-09-29 ~20:50 UTC to api.octa.computer market_price ($0.1198; CoinGecko 403 from builder network) — mcap/vol/change carried from this morning's CoinGecko pull
 
   function fmtUSD(n, digits){
     if(n == null || isNaN(n)) return "—";
