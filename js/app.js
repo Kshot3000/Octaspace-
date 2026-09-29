@@ -5,7 +5,10 @@
   // Active nav link
   var page = (location.pathname.split("/").pop() || "index.html").replace(".html","");
   document.querySelectorAll(".nav-links a[data-page]").forEach(function(a){
-    if(a.getAttribute("data-page") === page) a.classList.add("active");
+    if(a.getAttribute("data-page") === page){
+      a.classList.add("active");
+      a.setAttribute("aria-current", "page");
+    }
   });
 
   // Footer year
