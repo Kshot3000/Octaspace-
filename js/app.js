@@ -126,11 +126,36 @@
       .catch(function(){ if(note) note.textContent = "live figure unavailable"; });
   }
 
+  // Copy buttons on install snippets (build.html SDK cards).
+  function fallbackCopy(text){
+    var ta = document.createElement("textarea");
+    ta.value = text; ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta); ta.select();
+    try { document.execCommand("copy"); } catch(e){}
+    document.body.removeChild(ta);
+  }
+  function bindCopyButtons(){
+    document.querySelectorAll(".copy-btn[data-copy]").forEach(function(btn){
+      btn.addEventListener("click", function(){
+        var text = btn.getAttribute("data-copy");
+        function done(){
+          btn.textContent = "Copied ✓";
+          btn.classList.add("copied");
+          setTimeout(function(){ btn.textContent = "Copy"; btn.classList.remove("copied"); }, 1600);
+        }
+        if(navigator.clipboard && navigator.clipboard.writeText){
+          navigator.clipboard.writeText(text).then(done, function(){ fallbackCopy(text); done(); });
+        } else { fallbackCopy(text); done(); }
+      });
+    });
+  }
+
   function init(){
     load();
     loadMarketplace();
     loadNetwork();
     loadStaked();
+    bindCopyButtons();
   }
 
   if(document.readyState === "loading") document.addEventListener("DOMContentLoaded", init);

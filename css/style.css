@@ -137,6 +137,17 @@ td .tag{display:inline-block;font-size:.75rem;font-weight:700;padding:3px 10px;b
 .calc-out .sub{color:var(--muted);font-size:.9rem;margin-top:6px}
 .calc-note{color:var(--muted);font-size:.82rem;margin-top:14px;text-align:center}
 
+/* copyable install snippets (build.html SDK cards) */
+.snippet{display:flex;align-items:center;justify-content:space-between;gap:10px;background:#000;
+  border:1px solid var(--line);border-radius:10px;padding:9px 12px;margin:14px 0 10px}
+.snippet code{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;
+  color:var(--brand-lt);word-break:break-all}
+.copy-btn{flex:0 0 auto;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);
+  color:#fff;font-size:.78rem;font-weight:700;border-radius:8px;padding:6px 12px;cursor:pointer}
+.copy-btn:hover{background:rgba(255,255,255,.14)}
+.copy-btn:focus-visible{outline:2px solid var(--brand-lt);outline-offset:2px}
+.copy-btn.copied{border-color:rgba(61,220,132,.6);color:var(--green)}
+
 /* repo grid */
 .repos{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
 .repo{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);padding:20px}
