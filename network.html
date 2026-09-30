@@ -47,6 +47,7 @@
     <div class="stat"><div class="v" id="nw-nodes">—</div><div class="l">Nodes online · <span id="nw-locs">—</span> locations</div></div>
     <div class="stat"><div class="v" id="nw-util">—</div><div class="l">Of listed nodes rented</div></div>
     <div class="stat"><div class="v" id="nw-sessions24">—</div><div class="l">Rental sessions · last 24h</div></div>
+    <div class="stat"><div class="v" id="nw-sessions-total">—</div><div class="l">Rental sessions · all time</div></div>
     <div class="stat"><div class="v" id="nw-height">—</div><div class="l">Blockchain height</div></div>
     <div class="stat"><div class="v" id="nw-hash">—</div><div class="l">Network hashrate</div></div>
     <div class="stat"><div class="v" id="nw-frames24">—</div><div class="l">Render frames · last 24h</div></div>
@@ -101,10 +102,13 @@
     <div class="stat"><div class="v" id="cp-frames24">—</div><div class="l">Render frames · 24h</div></div>
     <div class="stat"><div class="v" id="cp-frames-total">—</div><div class="l">Render frames · all time</div></div>
     <div class="stat"><div class="v" id="cp-users24">—</div><div class="l">New users · 24h</div></div>
+    <div class="stat"><div class="v" id="cp-mem">—</div><div class="l">Node memory · aggregate</div></div>
+    <div class="stat"><div class="v" id="cp-disk">—</div><div class="l">Node storage · aggregate</div></div>
     <div class="stat"><div class="v" id="cp-vpn">—</div><div class="l">VPN exit nodes</div></div>
     <div class="stat"><div class="v" id="cp-vpn-locs">—</div><div class="l">VPN locations</div></div>
   </div>
   <ul class="footnotes">
+    <li>Node memory and storage are aggregate totals across the network (the sum of each node's reported RAM and disk), live from <code style="color:var(--brand-lt)">api.octa.computer/network</code> — not GPU VRAM.</li>
     <li>All figures are live values from <code style="color:var(--brand-lt)">api.octa.computer/network</code>, fetched in your browser on each visit. This site caches nothing — reload to refresh.</li>
     <li>Staking figures: staking OCTA unlocks staking rewards and is optional — running a node requires no OCTA stake. See the whitepaper for current economics.</li>
   </ul>
@@ -145,6 +149,6 @@
 
 <script src="js/app.js?v=px1192"></script>
 <script src="js/fx-bg.js?v=c717984" defer></script>
-<script src="js/network.js?v=2"></script>
+<script src="js/network.js?v=3"></script>
 </body>
 </html>

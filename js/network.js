@@ -39,6 +39,14 @@
     return "$" + Number(p).toFixed(4);
   }
 
+  // Aggregate bytes -> "22.3 TB". The /network API reports node RAM and disk
+  // as raw byte totals (power.mem, power.disk).
+  function fmtTB(n){
+    if(n === null || n === undefined || isNaN(n)) return "—";
+    var tb = Number(n) / 1e12;
+    return tb >= 100 ? Math.round(tb) + " TB" : tb.toFixed(1) + " TB";
+  }
+
   function renderFleet(gpus){
     var body = document.getElementById("fleet-body");
     if(!body) return;
@@ -167,6 +175,7 @@
     setText("nw-locs", fmtNum(nd.locations) + " locations");
     setText("nw-util", listed ? (100 * rented / listed).toFixed(1) + "%" : "—");
     setText("nw-sessions24", fmtNum(mk.sessions_24h));
+    setText("nw-sessions-total", fmtNum(mk.total_sessions));
     setText("nw-height", fmtNum(bc.height));
     setText("nw-hash", fmtHash(bc.hashrate));
     setText("nw-frames24", fmtNum(rn.frames_24h));
@@ -192,6 +201,8 @@
     setText("cp-tflops", fmtNum(pw.tflops));
     setText("cp-gpus", fmtNum(pw.gpus));
     setText("cp-cpus", fmtNum(pw.cpus));
+    setText("cp-mem", fmtTB(pw.mem));
+    setText("cp-disk", fmtTB(pw.disk));
     setText("cp-frames24", fmtNum(rn.frames_24h));
     setText("cp-frames-total", fmtNum(rn.frames_total));
     setText("cp-users24", "+" + fmtNum(pl.users_24h));
