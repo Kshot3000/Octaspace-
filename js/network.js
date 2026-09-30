@@ -73,6 +73,82 @@
     });
   }
 
+  function fmtCompactInt(n){
+    if(n === null || n === undefined || isNaN(n)) return "—";
+    if(n >= 1e6) return (n/1e6).toFixed(1) + "M";
+    if(n >= 1e3) return (n/1e3).toFixed(1) + "K";
+    return String(Math.round(n));
+  }
+
+  var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  function parseWeekKey(k){
+    // API keys look like "2026-8-10" (week-starting Monday)
+    var p = String(k).split("-");
+    return new Date(Number(p[0]), Number(p[1]) - 1, Number(p[2]));
+  }
+
+  function shortDate(d){ return MONTHS[d.getMonth()] + " " + d.getDate(); }
+
+  function longDate(d){ return MONTHS[d.getMonth()] + " " + d.getDate() + ", " + d.getFullYear(); }
+
+  function renderFramesChart(framesByWeek){
+    var box = document.getElementById("frames-chart");
+    if(!box) return;
+    var weeks = [];
+    (framesByWeek || []).forEach(function(entry){
+      var k = Object.keys(entry || {})[0];
+      if(!k) return;
+      var d = parseWeekKey(k);
+      weeks.push({ date: d, value: Number(entry[k]) || 0 });
+    });
+    weeks.sort(function(a, b){ return a.date - b.date; });
+    if(!weeks.length){
+      box.innerHTML = "";
+      var p = document.createElement("p");
+      p.style.color = "var(--muted)";
+      p.textContent = "Weekly render data unavailable.";
+      box.appendChild(p);
+      return;
+    }
+    var max = Math.max.apply(null, weeks.map(function(w){ return w.value; }).concat([1]));
+    var peak = weeks.reduce(function(a, b){ return b.value > a.value ? b : a; }, weeks[0]);
+    box.innerHTML = "";
+    box.setAttribute("role", "img");
+    box.setAttribute("aria-label",
+      "Bar chart of render frames per week, " + longDate(weeks[0].date) + " to " + longDate(weeks[weeks.length - 1].date) +
+      ". Peak week of " + longDate(peak.date) + ": " + fmtNum(peak.value) + " frames. The latest week is still in progress.");
+    weeks.forEach(function(w, i){
+      var latest = i === weeks.length - 1;
+      var col = document.createElement("div");
+      col.className = "bar-col";
+
+      var val = document.createElement("div");
+      val.className = "bar-val";
+      val.textContent = fmtCompactInt(w.value) + " frames";
+      col.appendChild(val);
+
+      var bar = document.createElement("div");
+      bar.className = "bar" + (latest ? " latest" : "");
+      bar.style.height = Math.max(4, Math.round(100 * w.value / max)) + "%";
+      bar.title = "Week of " + longDate(w.date) + ": " + fmtNum(w.value) + " frames" + (latest ? " (week in progress)" : "");
+      col.appendChild(bar);
+
+      var dt = document.createElement("div");
+      dt.className = "bar-date";
+      dt.textContent = shortDate(w.date);
+      col.appendChild(dt);
+
+      if(latest){
+        var tag = document.createElement("div");
+        tag.className = "bar-tag";
+        tag.textContent = "in progress";
+        col.appendChild(tag);
+      }
+      box.appendChild(col);
+    });
+  }
+
   function render(d){
     var bc = d.blockchain || {};
     var mk = d.marketplace || {};
@@ -98,6 +174,9 @@
 
     // Fleet table
     renderFleet(mk.gpus);
+
+    // Render farm weekly activity
+    renderFramesChart(rn.frames_by_week);
 
     // Blockchain vitals
     setText("nv-height", fmtNum(bc.height));
@@ -125,6 +204,14 @@
 
   function fail(){
     setText("nw-updated", "⚠ Live data unavailable — api.octa.computer didn't respond. Figures below show placeholders; try reloading.");
+    var chart = document.getElementById("frames-chart");
+    if(chart){
+      chart.innerHTML = "";
+      var pc = document.createElement("p");
+      pc.style.color = "var(--muted)";
+      pc.textContent = "Live render data unavailable — the OctaSpace API didn't respond.";
+      chart.appendChild(pc);
+    }
     var body = document.getElementById("fleet-body");
     if(body){
       body.innerHTML = "";

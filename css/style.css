@@ -176,6 +176,23 @@ td .tag{display:inline-block;font-size:.75rem;font-weight:700;padding:3px 10px;b
 .mission li{margin:12px 0 12px 20px;color:var(--muted)}
 .mission li strong{color:var(--txt)}
 
+/* render-farm weekly bar chart (network.html) */
+.barchart{display:flex;align-items:stretch;gap:10px;background:var(--card);
+  border:1px solid var(--line);border-radius:var(--radius);padding:28px 18px 14px;min-height:230px}
+.bar-col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;min-width:0}
+.bar-val{font-size:.72rem;color:var(--muted);margin-bottom:8px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.bar{width:100%;max-width:58px;border-radius:6px 6px 2px 2px;min-height:4px;
+  background:linear-gradient(180deg,#f0abfc,var(--brand-dk));transition:height .4s ease}
+.bar.latest{background:linear-gradient(180deg,#ffd166,var(--brand))}
+.bar-date{font-size:.7rem;color:var(--muted);margin-top:8px;white-space:nowrap}
+.bar-tag{font-size:.62rem;font-weight:700;color:var(--gold);border:1px solid rgba(255,200,87,.4);
+  background:rgba(255,200,87,.10);border-radius:999px;padding:1px 8px;margin-top:4px;white-space:nowrap}
+@media(max-width:560px){
+  .barchart{gap:6px;padding:22px 10px 12px}
+  .bar-val{font-size:.62rem}
+  .bar-date{font-size:.6rem}
+  .bar-tag{font-size:.55rem;padding:1px 5px}
+}
 /* footer */
 footer{position:relative;z-index:1;border-top:1px solid var(--line);margin-top:60px;padding:36px 0;color:var(--muted);font-size:.88rem;background:rgba(4,3,10,.84);backdrop-filter:blur(10px)}
 .foot-grid{display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap}
