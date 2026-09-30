@@ -4,6 +4,10 @@
 
   var STAKE_OCTA = 100000;
 
+  // Live OCTA/USD captured from the calculator's own /network fetch below, so the
+  // OCTA conversion stays fresh even if js/app.js failed to load. Last resort only.
+  var liveMarketPrice = 0;
+
   // Baked marketplace snapshot so the GPU prefill works even if the live API
   // is unreachable. Captured from https://api.octa.computer/network 2026-09-30T07:55Z.
   var MARKETPLACE_FALLBACK = {
@@ -74,7 +78,9 @@
         Object.keys(raw).forEach(function(name){
           gpus[name] = {avg: raw[name].avg_price, count: raw[name].count};
         });
+        if(d && typeof d.market_price === "number" && d.market_price > 0) liveMarketPrice = d.market_price;
         populateGpuSelect(select, {captured: "", live: true, gpus: gpus});
+        if(!window.OCTA_PRICE) calc(); // re-run with the fresh market_price when app.js didn't supply one
       })
       .catch(function(){ populateGpuSelect(select, MARKETPLACE_FALLBACK); });
   }
@@ -88,7 +94,7 @@
     var idleDay   = num("c-idle");         // USD/day per GPU from idle mining fallback
     var powerW    = num("c-power");        // watts per GPU
     var elecRate  = num("c-elec");         // USD per kWh
-    var octaPrice = window.OCTA_PRICE || 0.1190; // dead-code fallback if app.js didn't load — mirrors app.js FALLBACK (re-synced 2026-09-29 ~22:55 UTC to api.octa.computer market_price)
+    var octaPrice = window.OCTA_PRICE || liveMarketPrice || 0.1118; // last-resort literal mirrors js/app.js FALLBACK (synced 2026-09-30) — re-sync if app.js FALLBACK changes
 
     var hrsMonth = 730;
     var rentedHrs = hrsMonth * (util/100);
