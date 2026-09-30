@@ -9,16 +9,16 @@
   var liveMarketPrice = 0;
 
   // Baked marketplace snapshot so the GPU prefill works even if the live API
-  // is unreachable. Captured from https://api.octa.computer/network 2026-09-30T15:55Z.
+  // is unreachable. Captured from https://api.octa.computer/network 2026-09-30T20:50Z.
   var MARKETPLACE_FALLBACK = {
-    captured: "2026-09-30 15:55 UTC",
+    captured: "2026-09-30 20:50 UTC",
     live: false,
     gpus: {
-      "NVIDIA GeForce RTX 5090": {avg: 0.64, count: 57},
+      "NVIDIA GeForce RTX 5090": {avg: 0.59, count: 58},
       "NVIDIA GeForce RTX 3090": {avg: 0.23, count: 49},
       "NVIDIA GeForce RTX 4090": {avg: 0.42, count: 32},
-      "NVIDIA GeForce RTX 5080": {avg: 0.35, count: 13},
-      "NVIDIA GeForce RTX 5070": {avg: 0.18, count: 8},
+      "NVIDIA GeForce RTX 5080": {avg: 0.31, count: 17},
+      "NVIDIA GeForce RTX 5070": {avg: 0.17, count: 9},
       "NVIDIA H100 80GB HBM3":   {avg: 0.12, count: 8},
       "NVIDIA GeForce RTX 4070": {avg: 0.24, count: 7},
       "NVIDIA GeForce RTX 4080": {avg: 0.04, count: 2},
@@ -94,7 +94,7 @@
     var idleDay   = num("c-idle");         // USD/day per GPU from idle mining fallback
     var powerW    = num("c-power");        // watts per GPU
     var elecRate  = num("c-elec");         // USD per kWh
-    var octaPrice = window.OCTA_PRICE || liveMarketPrice || 0.1145; // last-resort literal mirrors js/app.js FALLBACK (synced 2026-09-30) — re-sync if app.js FALLBACK changes
+    var octaPrice = window.OCTA_PRICE || liveMarketPrice || 0.1131; // last-resort literal mirrors js/app.js FALLBACK (synced 2026-09-30) — re-sync if app.js FALLBACK changes
 
     var hrsMonth = 730;
     var rentedHrs = hrsMonth * (util/100);
