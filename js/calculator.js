@@ -94,7 +94,7 @@
     var idleDay   = num("c-idle");         // USD/day per GPU from idle mining fallback
     var powerW    = num("c-power");        // watts per GPU
     var elecRate  = num("c-elec");         // USD per kWh
-    var octaPrice = window.OCTA_PRICE || liveMarketPrice || 0.1154; // last-resort literal mirrors js/app.js FALLBACK (re-synced 2026-10-01 ~21:50 UTC) — re-sync if app.js FALLBACK changes
+    var octaPrice = window.OCTA_PRICE || liveMarketPrice || 0.1132; // last-resort literal mirrors js/app.js FALLBACK (re-synced 2026-10-01 ~23:55 UTC) — re-sync if app.js FALLBACK changes
 
     var hrsMonth = 730;
     var rentedHrs = hrsMonth * (util/100);

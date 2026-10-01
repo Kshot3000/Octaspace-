@@ -16,7 +16,7 @@
   document.querySelectorAll("[data-year]").forEach(function(el){ el.textContent = new Date().getFullYear(); });
 
   // Live OCTA stats
-  var FALLBACK = { price: 0.1154, mcap: 5039971, vol24h: 4819, change24h: 0.23, note: "cached" }; // price re-synced 2026-10-01 ~21:50 UTC to api.octa.computer market_price ($0.11539155; CoinGecko 403 from builder network) — mcap recomputed from live circulating supply (43,677,122); vol/change carried from the last CoinGecko pull
+  var FALLBACK = { price: 0.1132, mcap: 4942849, vol24h: 4819, change24h: 0.23, note: "cached" }; // price re-synced 2026-10-01 ~23:55 UTC to api.octa.computer market_price ($0.11316833; CoinGecko 403 from builder network) — mcap recomputed from live circulating supply (43,676,962); vol/change carried from the last CoinGecko pull
 
   function fmtUSD(n, digits){
     if(n == null || isNaN(n)) return "—";
