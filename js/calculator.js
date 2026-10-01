@@ -9,19 +9,19 @@
   var liveMarketPrice = 0;
 
   // Baked marketplace snapshot so the GPU prefill works even if the live API
-  // is unreachable. Captured from https://api.octa.computer/network 2026-10-01T10:50Z.
+  // is unreachable. Captured from https://api.octa.computer/network 2026-10-01T18:55Z.
   var MARKETPLACE_FALLBACK = {
-    captured: "2026-10-01 10:50 UTC",
+    captured: "2026-10-01 18:55 UTC",
     live: false,
     gpus: {
-      "NVIDIA GeForce RTX 5090": {avg: 0.65, count: 59},
+      "NVIDIA GeForce RTX 5090": {avg: 0.64, count: 58},
       "NVIDIA GeForce RTX 3090": {avg: 0.23, count: 47},
       "NVIDIA GeForce RTX 4090": {avg: 0.43, count: 33},
-      "NVIDIA GeForce RTX 5080": {avg: 0.32, count: 17},
+      "NVIDIA GeForce RTX 5080": {avg: 0.32, count: 18},
       "NVIDIA GeForce RTX 5070": {avg: 0.17, count: 9},
       "NVIDIA H100 80GB HBM3":   {avg: 0.12, count: 8},
-      "NVIDIA GeForce RTX 4070": {avg: 0.24, count: 7},
-      "NVIDIA GeForce RTX 4080": {avg: 0.04, count: 2},
+      "NVIDIA GeForce RTX 4070": {avg: 0.23, count: 7},
+      "NVIDIA GeForce RTX 4080": {avg: 0.19, count: 1},
       "NVIDIA RTX A6000":        {avg: 0.20, count: 2},
       "NVIDIA A100-SXM4-40GB":   {avg: 0.48, count: 1}
     }
