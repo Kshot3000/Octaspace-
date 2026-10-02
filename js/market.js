@@ -114,12 +114,32 @@
     return out.filter(function (g) { return isFinite(g.avg) && isFinite(g.count); });
   }
 
-  function fetchJSON(url) {
-    return fetch(url).then(function (r) {
+  function fetchJSON(url, signal) {
+    return fetch(url, { signal: signal }).then(function (r) {
       if (!r.ok) throw new Error("HTTP " + r.status);
       return r.json();
     });
   }
+
+  // fetch() has no built-in timeout. Without this wrapper, a hung API call
+  // (neither resolving nor rejecting) would leave every tool page stuck on
+  // "Loading market data…" forever — no error, no fallback. The 8s abort
+  // turns a hang into a rejection so the loudly-labeled snapshot path runs
+  // instead (same timeout as the GPU Price Index live fetch).
+  var FETCH_TIMEOUT_MS = 8000;
+  function withTimeout(url) {
+    var ctrl = new AbortController();
+    var t = setTimeout(function () { ctrl.abort(); }, FETCH_TIMEOUT_MS);
+    return fetchJSON(url, ctrl.signal).then(function (d) {
+      clearTimeout(t);
+      return d;
+    }, function (e) {
+      clearTimeout(t);
+      throw e;
+    });
+  }
+
+  var CG_URL = "https://api.coingecko.com/api/v3/simple/price?ids=octaspace&vs_currencies=usd";
 
   function liveResult(d) {
     var apiPrice = Number(d && d.market_price);
@@ -170,14 +190,22 @@
       cb(res);
     }
 
-    var cgPrice = null;
-    fetchJSON("https://api.coingecko.com/api/v3/simple/price?ids=octaspace&vs_currencies=usd")
-      .then(function (d) { cgPrice = Number(d && d.octaspace && d.octaspace.usd); })
-      .catch(function () { /* coingecko often 403s from builder egress — fine */ });
+    // Both feeds are kicked off in parallel and bounded by FETCH_TIMEOUT_MS.
+    // We wait for BOTH to settle before rendering so the documented priority
+    // (CoinGecko -> octapi market_price -> cached literal) actually holds:
+    // previously the octapi fetch's .then fired as soon as it resolved and
+    // used a still-null CoinGecko price, making the priority order a race.
+    var octapi = withTimeout(API).then(function (d) { return d; }, function () { return null; });
+    var coingecko = withTimeout(CG_URL).then(
+      function (d) { return Number(d && d.octaspace && d.octaspace.usd); },
+      function () { return null; } // coingecko often 403s from builder egress — fine
+    );
 
-    fetchJSON(API)
-      .then(function (d) { done(resolveOcta(liveResult(d), cgPrice)); })
-      .catch(function () { done(resolveOcta(snapshotResult(), cgPrice)); });
+    Promise.all([octapi, coingecko]).then(function (pair) {
+      var d = pair[0], cgPrice = pair[1];
+      var res = d ? liveResult(d) : snapshotResult();
+      done(resolveOcta(res, cgPrice));
+    });
   }
 
   window.OctaMarket = { load: load, SPECS: SPECS, FALLBACK: FALLBACK };
