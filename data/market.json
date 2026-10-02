@@ -75,7 +75,7 @@
    "vram": 48
   }
  },
- "octa_price_literal": 0.1163,
+ "octa_price_literal": 0.1158,
  "octa_price_note": "Last-resort literal. Keep in sync with js/app.js FALLBACK.price. Live price is attempted first via CoinGecko, then api.octa.computer.",
  "octaspace_gpus": {
   "NVIDIA A100-SXM4-40GB": {
