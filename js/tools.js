@@ -44,6 +44,28 @@
     return count < 5 ? ' <span class="tag mid">thin market</span>' : "";
   }
 
+  // Outlier guard — the same honesty rule the GPU Price Index applies: an
+  // OctaSpace average below 35% of the cheapest competitor snapshot is far
+  // more likely a mispriced or test listing than a bookable rate. Flag it
+  // loudly instead of celebrating it as the best deal on the page.
+  var OUTLIER_RATIO = 0.35;
+  function cheapestComp(c) {
+    var vals = [];
+    ["vast", "runpod_community", "runpod_secure", "saladcloud"].forEach(function (k) {
+      if (c && isFinite(c[k])) vals.push(c[k]);
+    });
+    return vals.length ? Math.min.apply(null, vals) : null;
+  }
+  function isOutlier(g, comp) {
+    var min = cheapestComp((comp || {})[g.id]);
+    return !!(min && isFinite(g.avg) && g.avg < OUTLIER_RATIO * min);
+  }
+  function verifyNote(g, comp) {
+    return isOutlier(g, comp)
+      ? ' <span class="tag lose" title="This average is far below every competitor snapshot — likely a mispriced or test listing. Check the live marketplace on octa.space before counting on it.">verify live</span>'
+      : "";
+  }
+
   /* Competitor display names for the plan/deals tables. */
   var COMP_LABELS = {
     vast: "Vast.ai spot",
@@ -70,7 +92,7 @@
   }
 
   /* ---------------- FIND ---------------- */
-  function initFind(res) {
+  function initFind(res, comp) {
     statusPill($("find-status"), res);
     var note = $("find-note");
     if (res.status !== "live" && note) {
@@ -102,7 +124,7 @@
           "<td><strong>" + esc(g.short) + "</strong></td>" +
           "<td>" + (g.vram ? g.vram + " GB" : "—") + "</td>" +
           "<td class=\"hl\">" + usd(g.avg) + "/hr</td>" +
-          "<td>" + g.count + thinNote(g.count) + "</td>" +
+          "<td>" + g.count + thinNote(g.count) + verifyNote(g, comp) + "</td>" +
           "<td>" + usd(g.avg * 730) + "/mo</td>";
         body.appendChild(tr);
       });
@@ -168,6 +190,9 @@
       if (save !== null && save > 0) {
         html += '<p class="calc-note">OctaSpace comes out <strong>' + save.toFixed(0) + "% cheaper</strong> than the cheapest snapshot alternative for this workload.</p>";
       }
+      if (isOutlier(g, comp)) {
+        html += '<p class="calc-note"><span class="tag lose">verify live</span> This GPU\'s OctaSpace average is far below every competitor snapshot — likely a mispriced or test listing pulling the average down. Confirm a bookable rate on octa.space before budgeting around it.</p>';
+      }
       html += '<p class="calc-note">' + esc(provLine()) + "</p>";
       out.innerHTML = html;
     }
@@ -195,7 +220,7 @@
       else if (r.save >= 10) badge = '<span class="tag mid">' + r.save.toFixed(0) + "% below Vast.ai spot</span>";
       else if (r.save >= 0) badge = '<span class="tag">' + r.save.toFixed(0) + "% below Vast.ai spot</span>";
       else badge = '<span class="tag lose">' + Math.abs(r.save).toFixed(0) + "% ABOVE Vast.ai spot</span>";
-      html += "<tr><td><strong>" + esc(g.short) + "</strong>" + thinNote(g.count) + "</td>" +
+      html += "<tr><td><strong>" + esc(g.short) + "</strong>" + thinNote(g.count) + verifyNote(g, comp) + "</td>" +
         '<td class="hl">' + usd(g.avg) + "/hr</td>" +
         "<td>" + g.count + "</td>" +
         "<td>" + (isFinite(r.vast) ? usd(r.vast) + "/hr" : "—") + "</td>" +
@@ -204,7 +229,8 @@
     body.innerHTML = html;
     var provEl = $("deals-prov");
     if (provEl) provEl.textContent = "OctaSpace avgs: " + (res.status === "live" ? "live via api.octa.computer" : "baked snapshot " + (res.captured || "")) +
-      ". Vast.ai: " + (prov.vast || "see methodology") + " Averages move with listings — the cheapest individual listing may be lower or higher than the average.";
+      ". Vast.ai: " + (prov.vast || "see methodology") + " Averages move with listings — the cheapest individual listing may be lower or higher than the average." +
+      " Rows tagged “verify live” average far below every competitor snapshot — likely a mispriced or test listing; confirm on octa.space before counting on that rate.";
   }
 
   /* ---------------- ROI ---------------- */
@@ -290,7 +316,7 @@
       var comp = res.competitors || {}, prov = res.provenance || {};
       if (page === "plan") initPlan(res, comp, prov);
       else if (page === "deals") initDeals(res, comp, prov);
-      else if (page === "find") initFind(res);
+      else if (page === "find") initFind(res, comp);
       else if (page === "roi") initRoi(res);
       else if (page === "pricing") initPricing(res);
     });

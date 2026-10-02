@@ -22,19 +22,21 @@
 
 
   // Baked marketplace snapshot so the GPU prefill works even if the live API
-  // is unreachable. Captured from https://api.octa.computer/network 2026-10-01T19:50Z.
+  // is unreachable. Captured from https://api.octa.computer/network 2026-10-02T07:50Z
+  // (re-verified identical across two reads at ~10:52 UTC the same day; mirrors
+  // the js/market.js baked fallback — keep the two in sync).
   var MARKETPLACE_FALLBACK = {
-    captured: "2026-10-01 19:50 UTC",
+    captured: "2026-10-02 07:50 UTC",
     live: false,
     gpus: {
-      "NVIDIA GeForce RTX 5090": {avg: 0.64, count: 60},
-      "NVIDIA GeForce RTX 3090": {avg: 0.22, count: 48},
-      "NVIDIA GeForce RTX 4090": {avg: 0.44, count: 34},
-      "NVIDIA GeForce RTX 5080": {avg: 0.32, count: 18},
-      "NVIDIA GeForce RTX 5070": {avg: 0.17, count: 9},
+      "NVIDIA GeForce RTX 5090": {avg: 0.63, count: 62},
+      "NVIDIA GeForce RTX 3090": {avg: 0.23, count: 50},
+      "NVIDIA GeForce RTX 4090": {avg: 0.43, count: 31},
+      "NVIDIA GeForce RTX 5080": {avg: 0.35, count: 19},
+      "NVIDIA GeForce RTX 5070": {avg: 0.19, count: 8},
       "NVIDIA H100 80GB HBM3":   {avg: 0.12, count: 8},
       "NVIDIA GeForce RTX 4070": {avg: 0.23, count: 7},
-      "NVIDIA GeForce RTX 4080": {avg: 0.19, count: 1},
+      "NVIDIA GeForce RTX 4080": {avg: 0.04, count: 2},
       "NVIDIA RTX A6000":        {avg: 0.20, count: 2},
       "NVIDIA A100-SXM4-40GB":   {avg: 0.48, count: 1}
     }
