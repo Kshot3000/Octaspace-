@@ -40,10 +40,10 @@
       "NVIDIA RTX A6000": { "avg_price": 0.2, "count": 2 }
     },
     "competitors": {
-      "rtx3090":  { "name": "RTX 3090",  "vram": 24, "vast": 0.13, "saladcloud": 0.09, "runpod_community": 0.22, "runpod_secure": 0.5 },
+      "rtx3090":  { "name": "RTX 3090",  "vram": 24, "vast": 0.11, "saladcloud": 0.09, "runpod_community": 0.22, "runpod_secure": 0.5 },
       "rtx4070":  { "name": "RTX 4070",  "vram": 12, "vast": 0.09 },
-      "rtx4080":  { "name": "RTX 4080",  "vram": 16, "vast": 0.15 },
-      "rtx4090":  { "name": "RTX 4090",  "vram": 24, "vast": 0.17, "saladcloud": 0.16, "runpod_community": 0.34, "runpod_secure": 0.74 },
+      "rtx4080":  { "name": "RTX 4080",  "vram": 16, "vast": 0.19 },
+      "rtx4090":  { "name": "RTX 4090",  "vram": 24, "vast": 0.22, "saladcloud": 0.16, "runpod_community": 0.34, "runpod_secure": 0.74 },
       "rtx5070":  { "name": "RTX 5070",  "vram": 12, "vast": 0.11 },
       "rtx5080":  { "name": "RTX 5080",  "vram": 16, "vast": 0.16, "saladcloud": 0.15 },
       "rtx5090":  { "name": "RTX 5090",  "vram": 32, "vast": 0.25, "saladcloud": 0.25, "runpod_community": 0.69, "runpod_secure": 0.99 },
@@ -53,7 +53,7 @@
       "h100":     { "name": "H100 80GB", "vram": 80, "vast": 0.89, "runpod_community": 1.99, "runpod_secure": 2.89 }
     },
     "provenance": {
-      "vast": "Vast.ai spot = cheapest offer found via the madebyagents.com GPU-rental index (aggregates the Vast.ai public API; not queried from Vast.ai directly). Feed back 2026-10-02 ~03:05 UTC after the HTTP 429 stretch (page header 'Prices refreshed: Oct 2, 2026, 2:19 AM UTC'; rows re-verified across two identical reads). 4 moved: 3090 $0.11->$0.13, 4070 $0.08->$0.09, 5090 $0.28->$0.25, H100 SXM $1.00->$0.89. 4090 $0.17, 5070 $0.11, 5080 $0.16 unchanged. 4080 retains 2026-10-01 17:50 UTC ($0.15, no spot row this pull — only On-Demand $0.22); A6000 retains 2026-10-01 17:50 UTC ($0.20, no Vast row); A100 retains 2026-09-27 ($0.75, no 40GB SXM4 spot row — this pull 80GB SXM $0.13).",
+      "vast": "Vast.ai spot = cheapest offer found via the madebyagents.com GPU-rental index (aggregates the Vast.ai public API; not queried from Vast.ai directly). Feed back 2026-10-02 ~03:05 UTC after the HTTP 429 stretch (page header 'Prices refreshed: Oct 2, 2026, 2:19 AM UTC'; rows re-verified across two identical reads). 4 moved: 3090 $0.11->$0.13, 4070 $0.08->$0.09, 5090 $0.28->$0.25, H100 SXM $1.00->$0.89. 4090 $0.17, 5070 $0.11, 5080 $0.16 unchanged. 4080 retains 2026-10-01 17:50 UTC ($0.15, no spot row this pull — only On-Demand $0.22); A6000 retains 2026-10-01 17:50 UTC ($0.20, no Vast row); A100 retains 2026-09-27 ($0.75, no 40GB SXM4 spot row — this pull 80GB SXM $0.13). Pulled 2026-10-02 ~06:50 UTC (page header 'Prices refreshed: Oct 2, 2026, 6:22 AM UTC'; per-SKU rows re-verified across two identical reads). 3 moved this pull: 3090 $0.13->$0.11, 4080 $0.15->$0.19, 4090 $0.17->$0.22 (merged per-SKU Vast Spot 'Cheapest Offer' rows; featured-card headlines ignored per methodology). 4070 $0.09, 5080 $0.16, 5090 $0.25, H100 SXM $0.89 unchanged. 5070 retains the 2026-10-02 03:05 UTC pull ($0.11): no Vast.ai spot row this pull (only On-Demand $0.15). A6000 retains the 2026-10-01 17:50 UTC pull ($0.20): no Vast.ai row this pull. A100 retains the 2026-09-27 snapshot ($0.75): no matching 40GB SXM4 spot row.",
       "runpod_community": "Official published Community Cloud rates (vetted third-party hosts), runpod.io/pricing — verified 2026-09-30, unchanged since 2026-09-13.",
       "runpod_secure": "Official published Secure Cloud rates (Tier 3/4 data centers), runpod.io/pricing — re-verified 2026-10-01.",
       "saladcloud": "Official 'from' rates on the Lowest priority tier, salad.com — re-verified 2026-10-01. Per-second billing while instances run; lower tiers can be preempted.",
