@@ -11,7 +11,7 @@ Community mission control for **OctaSpace** — helping the decentralized GPU cl
 - `compare.html` — honest head-to-head: OctaSpace vs Vast.ai vs Salad, with sources, dates, and billing tiers; competitor snapshots refreshed from live pulls
 - `earn.html` — provider playbook: requirements, 5-step setup, idle mining, earnings calculator fed by the live marketplace
 - `build.html` — developer resources: SDKs with one-click install snippets, CLIs, node software, live API playground (query `api.octa.computer/network` in the browser, no key needed), and community-built tooling (octa-fee-converter)
-- `rfc-base-fiat.html` — RFC-001: design options for official OCTA on Base + fiat on/off-ramps, with a scam-copycat token warning list (`data/octa-tokenlist.json`); research status re-verified regularly — no official OCTA token on Base as of 2026-10-01
+- `rfc-base-fiat.html` — RFC-001: design options for official OCTA on Base + fiat on/off-ramps, with a scam-copycat token warning list (`data/octa-tokenlist.json`); research status re-verified regularly — no official OCTA token on Base as of 2026-10-02
 - `onramp-demo.html` — on-ramp UX walkthrough demo, loudly labeled sandbox/simulation
 - `find.html` — GPU finder: search live OctaSpace marketplace rates by model, VRAM, and price
 - `plan.html` — job cost planner: GPU count × hours → total cost in USD and OCTA vs competitor snapshots
