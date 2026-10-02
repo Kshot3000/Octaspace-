@@ -103,11 +103,11 @@
    "count": 8
   },
   "NVIDIA GeForce RTX 5080": {
-   "avg_price": 0.38,
-   "count": 17
+   "avg_price": 0.35,
+   "count": 19
   },
   "NVIDIA GeForce RTX 5090": {
-   "avg_price": 0.59,
+   "avg_price": 0.63,
    "count": 62
   },
   "NVIDIA H100 80GB HBM3": {
@@ -119,6 +119,6 @@
    "count": 2
   }
  },
- "snapshot_captured": "2026-10-02T03:05:06Z",
+ "snapshot_captured": "2026-10-02T07:50:30Z",
  "snapshot_note": "Baked fallback captured from api.octa.computer/network by the hub maintainer. Used ONLY when the live fetch fails; the page always says so loudly."
 }
