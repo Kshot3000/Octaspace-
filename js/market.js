@@ -18,7 +18,7 @@
   "use strict";
 
   var API = "https://api.octa.computer/network";
-  var OCTA_LITERAL = 0.1131; // keep in sync with js/app.js FALLBACK.price
+  var OCTA_LITERAL = 0.1126; // keep in sync with js/app.js FALLBACK.price
 
   // Baked fallback: captured from https://api.octa.computer/network at
   // 2026-10-02T19:51:12Z. Used ONLY when the live fetch fails — the page
