@@ -18,7 +18,7 @@ Maintainer: @kshot9000 (https://x.com/kshot9000), https://github.com/Kshot3000
 - roi.html — hardware ROI calculator: purchase price + power + utilization -> monthly profit and break-even (illustrative math)
 - pricing.html — listing price optimizer: suggested ask-price band around the marketplace average
 - host.html — host onboarding guide: provider setup; running a node requires no OCTA stake
-
+- console.html — Host Console: monitor/control your own rigs (GPU temps, node service, power, rental prices, idle jobs) via octa-host-agent (github.com/Kshot3000/octa-host-agent) running on the rig; installable PWA; demo mode is simulated and labeled
 ## Data conventions (honesty rules of this hub)
 - OctaSpace prices are fetched live in the browser from the OctaSpace
   marketplace API (api.octa.computer). When the API is unreachable, the page

@@ -19,6 +19,7 @@ Community mission control for **OctaSpace** — helping the decentralized GPU cl
 - `roi.html` — hardware ROI calculator: purchase price + power + utilization → monthly profit and break-even (illustrative math, network fees excluded)
 - `pricing.html` — listing price optimizer: suggested ask-price band around the marketplace average per GPU
 - `host.html` — host onboarding guide: step-by-step provider setup (no OCTA stake required to run a node)
+- `console.html` — Host Console: monitor and control your own rigs (GPU temps, node service, power, rental prices, idle jobs) via the open-source [octa-host-agent](https://github.com/Kshot3000/octa-host-agent) running on each rig; installable PWA for Android/iOS; demo mode is simulated and labeled
 - `js/market.js` (shared live/snapshot market-data layer with 8s abort timeouts) and `js/tools.js` (find/plan/deals/roi/pricing logic, dispatched by `<body data-page>`)
 - `data/octa-tokenlist.json` — unofficial community scam-warning token list (copycat OCTA contracts on Base); clearly labeled unofficial, kept current
 - `css/style.css`, `js/app.js` (live price + network pulse), `js/calculator.js` (earn calculator), `js/network.js` (dashboard), `js/playground.js` (API playground), `js/onramp-demo.js`, `js/fx-bg.js` (animated background)
