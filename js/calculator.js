@@ -8,6 +8,19 @@
   // OCTA conversion stays fresh even if js/app.js failed to load. Last resort only.
   var liveMarketPrice = 0;
 
+  // fetch() has no built-in timeout: a hung feed (neither resolving nor
+  // rejecting) would never reach the .catch fallbacks below. An 8s abort
+  // turns a hang into a rejection so the labeled fallback paths run
+  // (same pattern as js/market.js and the GPU Price Index live fetch).
+  function fetchT(url){
+    var ctrl = new AbortController();
+    var t = setTimeout(function(){ ctrl.abort(); }, 8000);
+    return fetch(url, { signal: ctrl.signal }).then(function(r){
+      clearTimeout(t); return r;
+    }, function(e){ clearTimeout(t); throw e; });
+  }
+
+
   // Baked marketplace snapshot so the GPU prefill works even if the live API
   // is unreachable. Captured from https://api.octa.computer/network 2026-10-01T19:50Z.
   var MARKETPLACE_FALLBACK = {
@@ -70,7 +83,7 @@
       }
       calc();
     });
-    fetch("https://api.octa.computer/network")
+    fetchT("https://api.octa.computer/network")
       .then(function(r){ if(!r.ok) throw new Error("http " + r.status); return r.json(); })
       .then(function(d){
         var gpus = {};

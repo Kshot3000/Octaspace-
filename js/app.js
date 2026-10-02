@@ -18,6 +18,18 @@
   // Live OCTA stats
   var FALLBACK = { price: 0.1132, mcap: 4942849, vol24h: 4819, change24h: 0.23, note: "cached" }; // price re-synced 2026-10-01 ~23:55 UTC to api.octa.computer market_price ($0.11316833; CoinGecko 403 from builder network) — mcap recomputed from live circulating supply (43,676,962); vol/change carried from the last CoinGecko pull
 
+  // fetch() has no built-in timeout: a hung feed (neither resolving nor
+  // rejecting) would never reach the .catch fallbacks below. An 8s abort
+  // turns a hang into a rejection so the labeled fallback paths run
+  // (same pattern as js/market.js and the GPU Price Index live fetch).
+  function fetchT(url){
+    var ctrl = new AbortController();
+    var t = setTimeout(function(){ ctrl.abort(); }, 8000);
+    return fetch(url, { signal: ctrl.signal }).then(function(r){
+      clearTimeout(t); return r;
+    }, function(e){ clearTimeout(t); throw e; });
+  }
+
   function fmtUSD(n, digits){
     if(n == null || isNaN(n)) return "—";
     return "$" + n.toLocaleString("en-US",{minimumFractionDigits:digits||2, maximumFractionDigits:digits||2});
@@ -59,7 +71,7 @@
 
   function load(){
     render(FALLBACK);
-    fetch("https://api.coingecko.com/api/v3/simple/price?ids=octaspace&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true")
+    fetchT("https://api.coingecko.com/api/v3/simple/price?ids=octaspace&vs_currencies=usd&include_market_cap=true&include_24hr_vol=true&include_24hr_change=true")
       .then(function(r){ if(!r.ok) throw new Error("cg "+r.status); return r.json(); })
       .then(function(j){
         var o = j && j.octaspace;
@@ -79,7 +91,7 @@
   // already CORS-open for our network-pulse features. Keeps the price live for
   // visitors whose browser can't reach CoinGecko.
   function loadOctaApiPrice(){
-    fetch("https://api.octa.computer/network")
+    fetchT("https://api.octa.computer/network")
       .then(function(r){ if(!r.ok) throw new Error("octa "+r.status); return r.json(); })
       .then(function(j){
         var p = j && typeof j.market_price === "number" ? j.market_price : null;
@@ -94,7 +106,7 @@
   function loadMarketplace(){
     var price = document.getElementById("octa-4090-price");
     if(!price) return; // page doesn't show a marketplace average
-    fetch("https://api.octa.computer/network")
+    fetchT("https://api.octa.computer/network")
       .then(function(r){ if(!r.ok) throw new Error("octa "+r.status); return r.json(); })
       .then(function(j){
         var g = j && j.marketplace && j.marketplace.gpus;
@@ -113,7 +125,7 @@
   function loadNetwork(){
     if(!document.getElementById("net-nodes")) return; // page has no network-pulse section
     var note = document.getElementById("net-updated");
-    fetch("https://api.octa.computer/network")
+    fetchT("https://api.octa.computer/network")
       .then(function(r){ if(!r.ok) throw new Error("octa "+r.status); return r.json(); })
       .then(function(j){
         var mp = j.marketplace || {}, n = j.nodes || {}, bc = j.blockchain || {};
@@ -134,7 +146,7 @@
     var el = document.getElementById("net-staked");
     if(!el) return; // page has no staking stat
     var note = document.getElementById("net-staked-note");
-    fetch("https://api.octa.computer/network")
+    fetchT("https://api.octa.computer/network")
       .then(function(r){ if(!r.ok) throw new Error("octa "+r.status); return r.json(); })
       .then(function(j){
         var staked = (j && typeof j.staked === "number") ? j.staked : null;

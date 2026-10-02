@@ -9,6 +9,19 @@
 
   var ENDPOINT = "https://api.octa.computer/network";
 
+  // fetch() has no built-in timeout: a hung feed (neither resolving nor
+  // rejecting) would never reach the .catch fallbacks below. An 8s abort
+  // turns a hang into a rejection so the labeled fallback paths run
+  // (same pattern as js/market.js and the GPU Price Index live fetch).
+  function fetchT(url){
+    var ctrl = new AbortController();
+    var t = setTimeout(function(){ ctrl.abort(); }, 8000);
+    return fetch(url, { signal: ctrl.signal }).then(function(r){
+      clearTimeout(t); return r;
+    }, function(e){ clearTimeout(t); throw e; });
+  }
+
+
   var out = document.getElementById("pg-out");
   var statusEl = document.getElementById("pg-status");
   var runBtn = document.getElementById("pg-run");
@@ -122,7 +135,7 @@
     setStatus("fetching…", false);
     runBtn.disabled = true;
     var t0 = (typeof performance !== "undefined" && performance.now) ? performance.now() : Date.now();
-    fetch(ENDPOINT)
+    fetchT(ENDPOINT)
       .then(function (r) {
         if (!r.ok) throw new Error("HTTP " + r.status);
         return r.json();
