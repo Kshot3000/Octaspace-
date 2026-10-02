@@ -75,7 +75,7 @@
    "vram": 48
   }
  },
- "octa_price_literal": 0.1158,
+ "octa_price_literal": 0.1153,
  "octa_price_note": "Last-resort literal. Keep in sync with js/app.js FALLBACK.price. Live price is attempted first via CoinGecko, then api.octa.computer.",
  "octaspace_gpus": {
   "NVIDIA A100-SXM4-40GB": {
@@ -84,7 +84,7 @@
   },
   "NVIDIA GeForce RTX 3090": {
    "avg_price": 0.24,
-   "count": 52
+   "count": 51
   },
   "NVIDIA GeForce RTX 4070": {
    "avg_price": 0.23,
@@ -103,12 +103,12 @@
    "count": 8
   },
   "NVIDIA GeForce RTX 5080": {
-   "avg_price": 0.39,
-   "count": 18
+   "avg_price": 0.41,
+   "count": 16
   },
   "NVIDIA GeForce RTX 5090": {
    "avg_price": 0.63,
-   "count": 63
+   "count": 62
   },
   "NVIDIA H100 80GB HBM3": {
    "avg_price": 0.12,
@@ -119,6 +119,6 @@
    "count": 2
   }
  },
- "snapshot_captured": "2026-10-02T11:50:47Z",
+ "snapshot_captured": "2026-10-02T15:54:26Z",
  "snapshot_note": "Baked fallback captured from api.octa.computer/network by the hub maintainer. Used ONLY when the live fetch fails; the page always says so loudly."
 }

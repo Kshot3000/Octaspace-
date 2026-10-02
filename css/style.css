@@ -206,3 +206,18 @@ footer{position:relative;z-index:1;border-top:1px solid var(--line);margin-top:6
 .foot-grid .donate code{background:#000;border:1px solid var(--line);border-radius:6px;padding:2px 8px;
   font-size:.78rem;color:var(--gold);word-break:break-all}
 .disclaimer{margin-top:18px;font-size:.78rem;opacity:.75}
+
+/* mobile touch targets (measured 2026-10-02, rendered sweep at 390px):
+   standalone controls were 18–28px tall — the 6 tool-card CTAs repeated on
+   7 pages at 20px, RFC table-of-contents links at 20px, the footer X/GitHub
+   pair at 18px on all 13 pages, SDK Copy buttons at 28px, API playground
+   tabs at 34px. On narrow screens they become 40px-tall targets. Inline
+   prose links are deliberately untouched (WCAG exempts links inside
+   sentences) and desktop rendering is unchanged. */
+@media(max-width:800px){
+  section[aria-label="More tools"] .card p a,
+  section[aria-label="Host and renter tools"] .card p a,
+  .toc li a,.cta-line a,footer .donate span a,.repo>a{
+    display:inline-flex;align-items:center;min-height:40px}
+  .copy-btn,.pg-btn,.pg-run{min-height:40px}
+}

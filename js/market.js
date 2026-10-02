@@ -18,24 +18,24 @@
   "use strict";
 
   var API = "https://api.octa.computer/network";
-  var OCTA_LITERAL = 0.1158; // keep in sync with js/app.js FALLBACK.price
+  var OCTA_LITERAL = 0.1153; // keep in sync with js/app.js FALLBACK.price
 
   // Baked fallback: captured from https://api.octa.computer/network at
-  // 2026-10-02T11:50:47Z. Used ONLY when the live fetch fails — the page
+  // 2026-10-02T15:54:26Z. Used ONLY when the live fetch fails — the page
   // always labels it as a snapshot. Inline (not fetched) so it works from
   // any origin, including file://. Mirrors data/market.json — if you update
   // one, update the other.
   var FALLBACK = {
-    "snapshot_captured": "2026-10-02T11:50:47Z",
+    "snapshot_captured": "2026-10-02T15:54:26Z",
     "octaspace_gpus": {
       "NVIDIA A100-SXM4-40GB": { "avg_price": 0.48, "count": 1 },
-      "NVIDIA GeForce RTX 3090": { "avg_price": 0.24, "count": 52 },
+      "NVIDIA GeForce RTX 3090": { "avg_price": 0.24, "count": 51 },
       "NVIDIA GeForce RTX 4070": { "avg_price": 0.23, "count": 7 },
       "NVIDIA GeForce RTX 4080": { "avg_price": 0.04, "count": 2 },
       "NVIDIA GeForce RTX 4090": { "avg_price": 0.44, "count": 31 },
       "NVIDIA GeForce RTX 5070": { "avg_price": 0.19, "count": 8 },
-      "NVIDIA GeForce RTX 5080": { "avg_price": 0.39, "count": 18 },
-      "NVIDIA GeForce RTX 5090": { "avg_price": 0.63, "count": 63 },
+      "NVIDIA GeForce RTX 5080": { "avg_price": 0.41, "count": 16 },
+      "NVIDIA GeForce RTX 5090": { "avg_price": 0.63, "count": 62 },
       "NVIDIA H100 80GB HBM3": { "avg_price": 0.12, "count": 8 },
       "NVIDIA RTX A6000": { "avg_price": 0.2, "count": 2 }
     },
