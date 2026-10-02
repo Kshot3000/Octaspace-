@@ -12,6 +12,12 @@ Maintainer: @kshot9000 (https://x.com/kshot9000), https://github.com/Kshot3000
 - rfc-base-fiat.html — RFC-001: community spec for OCTA on Base + fiat on/off ramps,
   with a scam-token warning list and research notes
 - onramp-demo.html — sandbox (SIMULATED) on-ramp widget demo; all quotes are mock
+- find.html — GPU finder: live OctaSpace marketplace rates by model, VRAM, price
+- plan.html — job cost planner: GPU count x hours -> USD and OCTA cost vs competitor snapshots
+- deals.html — deals feed: where OctaSpace beats Vast.ai spot right now, ranked by savings
+- roi.html — hardware ROI calculator: purchase price + power + utilization -> monthly profit and break-even (illustrative math)
+- pricing.html — listing price optimizer: suggested ask-price band around the marketplace average
+- host.html — host onboarding guide: provider setup; running a node requires no OCTA stake
 
 ## Data conventions (honesty rules of this hub)
 - OctaSpace prices are fetched live in the browser from the OctaSpace

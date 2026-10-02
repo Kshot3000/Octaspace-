@@ -13,6 +13,13 @@ Community mission control for **OctaSpace** — helping the decentralized GPU cl
 - `build.html` — developer resources: SDKs with one-click install snippets, CLIs, node software, live API playground (query `api.octa.computer/network` in the browser, no key needed), and community-built tooling (octa-fee-converter)
 - `rfc-base-fiat.html` — RFC-001: design options for official OCTA on Base + fiat on/off-ramps, with a scam-copycat token warning list (`data/octa-tokenlist.json`); research status re-verified regularly — no official OCTA token on Base as of 2026-10-01
 - `onramp-demo.html` — on-ramp UX walkthrough demo, loudly labeled sandbox/simulation
+- `find.html` — GPU finder: search live OctaSpace marketplace rates by model, VRAM, and price
+- `plan.html` — job cost planner: GPU count × hours → total cost in USD and OCTA vs competitor snapshots
+- `deals.html` — deals feed: where OctaSpace beats Vast.ai spot right now, ranked by savings (OctaSpace avgs from live marketplace or clearly labeled baked snapshot)
+- `roi.html` — hardware ROI calculator: purchase price + power + utilization → monthly profit and break-even (illustrative math, network fees excluded)
+- `pricing.html` — listing price optimizer: suggested ask-price band around the marketplace average per GPU
+- `host.html` — host onboarding guide: step-by-step provider setup (no OCTA stake required to run a node)
+- `js/market.js` (shared live/snapshot market-data layer with 8s abort timeouts) and `js/tools.js` (find/plan/deals/roi/pricing logic, dispatched by `<body data-page>`)
 - `data/octa-tokenlist.json` — unofficial community scam-warning token list (copycat OCTA contracts on Base); clearly labeled unofficial, kept current
 - `css/style.css`, `js/app.js` (live price + network pulse), `js/calculator.js` (earn calculator), `js/network.js` (dashboard), `js/playground.js` (API playground), `js/onramp-demo.js`, `js/fx-bg.js` (animated background)
 
@@ -20,7 +27,7 @@ Community mission control for **OctaSpace** — helping the decentralized GPU cl
 
 1. Honest comparisons that rank and bring renters/providers to OctaSpace
 2. Provider onboarding that lowers the real friction (staking, setup, idle mining)
-3. Upstream code fixes — auditing `github.com/octaspace` repos and opening PRs (11 open from Kshot3000 forks as of 2026-10-01, all mergeable, no CI failures or maintainer changes requested)
+3. Upstream code fixes — auditing `github.com/octaspace` repos and opening PRs (11 open from Kshot3000 forks as of 2026-10-02, all mergeable, no CI failures or maintainer changes requested)
 
 ## Freshness
 

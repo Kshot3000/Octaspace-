@@ -1,7 +1,9 @@
 // OctaSpace Hub — host & renter tools (js/tools.js).
 // Page logic for find / plan / deals / roi / pricing, dispatched via
 // <body data-page="...">. Shared data comes from js/market.js
-// (OctaMarket.load). Competitor snapshot figures come from data/market.json
+// (OctaMarket.load). Competitor snapshot figures come from js/market.js's
+// inline FALLBACK (mirrored in data/market.json; market.js is what the pages
+// load)
 // and always carry source + observation-date labels — never live claims.
 (function () {
   "use strict";
