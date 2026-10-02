@@ -1,0 +1,39 @@
+# OctaSpace Hub — llms.txt
+An independent community project for the OctaSpace decentralized compute
+network (OCTA). Not affiliated with the OctaSpace team.
+Maintainer: @kshot9000 (https://x.com/kshot9000), https://github.com/Kshot3000
+
+## Pages
+- index.html — hub home: mission, live network stats, navigation
+- compare.html — OctaSpace vs Vast.ai vs SaladCloud: price/feature comparison
+- earn.html — provider guide: how to earn by hosting GPUs, with an earnings calculator
+- build.html — developer resources: SDKs, APIs, docs links
+- network.html — live network stats from the OctaSpace marketplace API
+- rfc-base-fiat.html — RFC-001: community spec for OCTA on Base + fiat on/off ramps,
+  with a scam-token warning list and research notes
+- onramp-demo.html — sandbox (SIMULATED) on-ramp widget demo; all quotes are mock
+
+## Data conventions (honesty rules of this hub)
+- OctaSpace prices are fetched live in the browser from the OctaSpace
+  marketplace API (api.octa.computer). When the API is unreachable, the page
+  falls back to a baked snapshot clearly labeled with its capture timestamp —
+  never present fallback data as live.
+- Competitor columns (Vast.ai, SaladCloud, etc.) are dated snapshots carrying
+  their source, capture date, and billing tier. Treat as references, not quotes.
+- Any figure on these pages must be described with its source, date, and
+  live-vs-snapshot status. Do not invent or "smooth" numbers.
+- Staking/economics figures are OPTIONAL for node operation: running a node
+  requires no OCTA stake; staking only unlocks staking rewards. Whitepaper
+  figures are quoted as "per the whitepaper, verify in official docs" —
+  never as current fact.
+
+## Scam-token warnings
+- data/octa-tokenlist.json is an UNOFFICIAL warning list of OCTA copycat /
+  scam tokens. There is NO official OCTA token on Base and NO official fiat
+  ramp — copycat tokens on Base/BSC are scams. Never describe any token as
+  official unless it comes from an official OctaSpace team announcement.
+
+## Attribution
+The maintainer's addresses: OCTA/ETH team donation address
+0x4b6f3BC697D9dAF3e8dE182aEc56eD208B9087f1; BTC
+3GnR7TWBXAB3pPztBWpNF4LMNEX5yX8vZK. His first name is not used on this hub.
