@@ -18,42 +18,42 @@
   "use strict";
 
   var API = "https://api.octa.computer/network";
-  var OCTA_LITERAL = 0.1151; // keep in sync with js/app.js FALLBACK.price
+  var OCTA_LITERAL = 0.1155; // keep in sync with js/app.js FALLBACK.price
 
   // Baked fallback: captured from https://api.octa.computer/network at
-  // 2026-10-02T07:50:30Z. Used ONLY when the live fetch fails — the page
+  // 2026-10-02T11:50:47Z. Used ONLY when the live fetch fails — the page
   // always labels it as a snapshot. Inline (not fetched) so it works from
   // any origin, including file://. Mirrors data/market.json — if you update
   // one, update the other.
   var FALLBACK = {
-    "snapshot_captured": "2026-10-02T07:50:30Z",
+    "snapshot_captured": "2026-10-02T11:50:47Z",
     "octaspace_gpus": {
       "NVIDIA A100-SXM4-40GB": { "avg_price": 0.48, "count": 1 },
-      "NVIDIA GeForce RTX 3090": { "avg_price": 0.23, "count": 50 },
+      "NVIDIA GeForce RTX 3090": { "avg_price": 0.24, "count": 52 },
       "NVIDIA GeForce RTX 4070": { "avg_price": 0.23, "count": 7 },
       "NVIDIA GeForce RTX 4080": { "avg_price": 0.04, "count": 2 },
-      "NVIDIA GeForce RTX 4090": { "avg_price": 0.43, "count": 31 },
+      "NVIDIA GeForce RTX 4090": { "avg_price": 0.44, "count": 31 },
       "NVIDIA GeForce RTX 5070": { "avg_price": 0.19, "count": 8 },
-      "NVIDIA GeForce RTX 5080": { "avg_price": 0.35, "count": 19 },
-      "NVIDIA GeForce RTX 5090": { "avg_price": 0.63, "count": 62 },
+      "NVIDIA GeForce RTX 5080": { "avg_price": 0.39, "count": 18 },
+      "NVIDIA GeForce RTX 5090": { "avg_price": 0.63, "count": 63 },
       "NVIDIA H100 80GB HBM3": { "avg_price": 0.12, "count": 8 },
       "NVIDIA RTX A6000": { "avg_price": 0.2, "count": 2 }
     },
     "competitors": {
-      "rtx3090":  { "name": "RTX 3090",  "vram": 24, "vast": 0.11, "saladcloud": 0.09, "runpod_community": 0.22, "runpod_secure": 0.5 },
-      "rtx4070":  { "name": "RTX 4070",  "vram": 12, "vast": 0.07 },
-      "rtx4080":  { "name": "RTX 4080",  "vram": 16, "vast": 0.18 },
-      "rtx4090":  { "name": "RTX 4090",  "vram": 24, "vast": 0.21, "saladcloud": 0.16, "runpod_community": 0.34, "runpod_secure": 0.74 },
-      "rtx5070":  { "name": "RTX 5070",  "vram": 12, "vast": 0.1 },
+      "rtx3090":  { "name": "RTX 3090",  "vram": 24, "vast": 0.1, "saladcloud": 0.09, "runpod_community": 0.22, "runpod_secure": 0.5 },
+      "rtx4070":  { "name": "RTX 4070",  "vram": 12, "vast": 0.09 },
+      "rtx4080":  { "name": "RTX 4080",  "vram": 16, "vast": 0.17 },
+      "rtx4090":  { "name": "RTX 4090",  "vram": 24, "vast": 0.2, "saladcloud": 0.16, "runpod_community": 0.34, "runpod_secure": 0.74 },
+      "rtx5070":  { "name": "RTX 5070",  "vram": 12, "vast": 0.11 },
       "rtx5080":  { "name": "RTX 5080",  "vram": 16, "vast": 0.16, "saladcloud": 0.15 },
-      "rtx5090":  { "name": "RTX 5090",  "vram": 32, "vast": 0.29, "saladcloud": 0.25, "runpod_community": 0.69, "runpod_secure": 0.99 },
+      "rtx5090":  { "name": "RTX 5090",  "vram": 32, "vast": 0.27, "saladcloud": 0.25, "runpod_community": 0.69, "runpod_secure": 0.99 },
       "rtxa6000": { "name": "RTX A6000", "vram": 48, "vast": 0.2, "runpod_community": 0.33, "runpod_secure": 0.53 },
       "a100":     { "name": "A100 40GB", "vram": 40, "vast": 0.75, "runpod_community": 1.19, "runpod_secure": 1.59,
                     "note": "OctaSpace listing is the 40 GB SXM4 variant; RunPod Secure rate is the 80 GB variant" },
       "h100":     { "name": "H100 80GB", "vram": 80, "vast": 0.89, "runpod_community": 1.99, "runpod_secure": 2.89 }
     },
     "provenance": {
-      "vast": "Vast.ai spot = cheapest offer found via the madebyagents.com GPU-rental index (aggregates the Vast.ai public API; not queried from Vast.ai directly). Feed back 2026-10-02 ~03:05 UTC after the HTTP 429 stretch (page header 'Prices refreshed: Oct 2, 2026, 2:19 AM UTC'; rows re-verified across two identical reads). 4 moved: 3090 $0.11->$0.13, 4070 $0.08->$0.09, 5090 $0.28->$0.25, H100 SXM $1.00->$0.89. 4090 $0.17, 5070 $0.11, 5080 $0.16 unchanged. 4080 retains 2026-10-01 17:50 UTC ($0.15, no spot row this pull — only On-Demand $0.22); A6000 retains 2026-10-01 17:50 UTC ($0.20, no Vast row); A100 retains 2026-09-27 ($0.75, no 40GB SXM4 spot row — this pull 80GB SXM $0.13). Pulled 2026-10-02 ~06:50 UTC (page header 'Prices refreshed: Oct 2, 2026, 6:22 AM UTC'; per-SKU rows re-verified across two identical reads). 3 moved this pull: 3090 $0.13->$0.11, 4080 $0.15->$0.19, 4090 $0.17->$0.22 (merged per-SKU Vast Spot 'Cheapest Offer' rows; featured-card headlines ignored per methodology). 4070 $0.09, 5080 $0.16, 5090 $0.25, H100 SXM $0.89 unchanged. 5070 retains the 2026-10-02 03:05 UTC pull ($0.11): no Vast.ai spot row this pull (only On-Demand $0.15). A6000 retains the 2026-10-01 17:50 UTC pull ($0.20): no Vast.ai row this pull. A100 retains the 2026-09-27 snapshot ($0.75): no matching 40GB SXM4 spot row. Pulled 2026-10-02 ~09:50 UTC (page header 'Prices refreshed: Oct 2, 2026, 9:23 AM UTC'; per-SKU rows re-verified across two identical reads). 5 moved this pull: 4070 $0.09->$0.07, 4080 $0.19->$0.18, 4090 $0.22->$0.21, 5070 $0.11->$0.10, 5090 $0.25->$0.29 (merged per-SKU Vast Spot 'Cheapest Offer' rows; featured-card headlines ignored per methodology). 3090 $0.11, 5080 $0.16, H100 SXM $0.89 unchanged. A6000 retains the 2026-10-01 17:50 UTC pull ($0.20): no Vast.ai row this pull. A100 retains the 2026-09-27 snapshot ($0.75): no matching 40GB SXM4 spot row (this pull 80GB SXM $0.35 / 80GB PCIe $0.18). Pulled 2026-10-02 ~09:50 UTC (page header 'Prices refreshed: Oct 2, 2026, 9:23 AM UTC'; per-SKU rows re-verified across two identical reads). 5 moved this pull: 4070 $0.09->$0.07, 4080 $0.19->$0.18, 4090 $0.22->$0.21, 5070 $0.11->$0.10, 5090 $0.25->$0.29 (merged per-SKU Vast Spot 'Cheapest Offer' rows; featured-card headlines ignored per methodology). 3090 $0.11, 5080 $0.16, H100 SXM $0.89 unchanged. A6000 retains the 2026-10-01 17:50 UTC pull ($0.20): no Vast.ai row this pull. A100 retains the 2026-09-27 snapshot ($0.75): no matching 40GB SXM4 spot row (this pull 80GB SXM $0.35 / 80GB PCIe $0.18).",
+      "vast": "Vast.ai spot = cheapest offer found via the madebyagents.com GPU-rental index (aggregates the Vast.ai public API; not queried from Vast.ai directly). Feed back 2026-10-02 ~03:05 UTC after the HTTP 429 stretch (page header 'Prices refreshed: Oct 2, 2026, 2:19 AM UTC'; rows re-verified across two identical reads). 4 moved: 3090 $0.11->$0.13, 4070 $0.08->$0.09, 5090 $0.28->$0.25, H100 SXM $1.00->$0.89. 4090 $0.17, 5070 $0.11, 5080 $0.16 unchanged. 4080 retains 2026-10-01 17:50 UTC ($0.15, no spot row this pull — only On-Demand $0.22); A6000 retains 2026-10-01 17:50 UTC ($0.20, no Vast row); A100 retains 2026-09-27 ($0.75, no 40GB SXM4 spot row — this pull 80GB SXM $0.13). Pulled 2026-10-02 ~06:50 UTC (page header 'Prices refreshed: Oct 2, 2026, 6:22 AM UTC'; per-SKU rows re-verified across two identical reads). 3 moved this pull: 3090 $0.13->$0.11, 4080 $0.15->$0.19, 4090 $0.17->$0.22 (merged per-SKU Vast Spot 'Cheapest Offer' rows; featured-card headlines ignored per methodology). 4070 $0.09, 5080 $0.16, 5090 $0.25, H100 SXM $0.89 unchanged. 5070 retains the 2026-10-02 03:05 UTC pull ($0.11): no Vast.ai spot row this pull (only On-Demand $0.15). A6000 retains the 2026-10-01 17:50 UTC pull ($0.20): no Vast.ai row this pull. A100 retains the 2026-09-27 snapshot ($0.75): no matching 40GB SXM4 spot row. Pulled 2026-10-02 ~09:50 UTC (page header 'Prices refreshed: Oct 2, 2026, 9:23 AM UTC'; per-SKU rows re-verified across two identical reads). 5 moved this pull: 4070 $0.09->$0.07, 4080 $0.19->$0.18, 4090 $0.22->$0.21, 5070 $0.11->$0.10, 5090 $0.25->$0.29 (merged per-SKU Vast Spot 'Cheapest Offer' rows; featured-card headlines ignored per methodology). 3090 $0.11, 5080 $0.16, H100 SXM $0.89 unchanged. A6000 retains the 2026-10-01 17:50 UTC pull ($0.20): no Vast.ai row this pull. A100 retains the 2026-09-27 snapshot ($0.75): no matching 40GB SXM4 spot row (this pull 80GB SXM $0.35 / 80GB PCIe $0.18). Pulled 2026-10-02 ~11:50 UTC (page header 'Prices refreshed: Oct 2, 2026, 11:23 AM UTC'; per-SKU rows re-verified across two identical reads). 6 moved this pull: 3090 $0.11->$0.10, 4070 $0.07->$0.09, 4080 $0.18->$0.17, 4090 $0.21->$0.20, 5070 $0.10->$0.11, 5090 $0.29->$0.27 (merged per-SKU Vast Spot 'Cheapest Offer' rows; featured-card headlines ignored per methodology). 5080 $0.16, H100 SXM $0.89 unchanged. A6000 retains the 2026-10-01 17:50 UTC pull ($0.20): no Vast.ai row this pull (cheapest A6000 offer shown is RunPod Community). A100 retains the 2026-09-27 snapshot ($0.75): no matching 40GB SXM4 spot row (this pull 80GB SXM $0.40 / 80GB PCIe $0.19).",
       "runpod_community": "Official published Community Cloud rates (vetted third-party hosts), runpod.io/pricing — verified 2026-09-30, unchanged since 2026-09-13.",
       "runpod_secure": "Official published Secure Cloud rates (Tier 3/4 data centers), runpod.io/pricing — re-verified 2026-10-01.",
       "saladcloud": "Official 'from' rates on the Lowest priority tier, salad.com — re-verified 2026-10-01. Per-second billing while instances run; lower tiers can be preempted.",

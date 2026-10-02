@@ -22,17 +22,17 @@
 
 
   // Baked marketplace snapshot so the GPU prefill works even if the live API
-  // is unreachable. Captured from https://api.octa.computer/network 2026-10-02T07:50Z
-  // (re-verified identical across two reads at ~10:52 UTC the same day; mirrors
+  // is unreachable. Captured from https://api.octa.computer/network 2026-10-02T11:50Z
+  // (verified identical across three reads at ~11:48-11:50 UTC the same day; mirrors
   // the js/market.js baked fallback — keep the two in sync).
   var MARKETPLACE_FALLBACK = {
-    captured: "2026-10-02 07:50 UTC",
+    captured: "2026-10-02 11:50 UTC",
     live: false,
     gpus: {
-      "NVIDIA GeForce RTX 5090": {avg: 0.63, count: 62},
-      "NVIDIA GeForce RTX 3090": {avg: 0.23, count: 50},
-      "NVIDIA GeForce RTX 4090": {avg: 0.43, count: 31},
-      "NVIDIA GeForce RTX 5080": {avg: 0.35, count: 19},
+      "NVIDIA GeForce RTX 5090": {avg: 0.63, count: 63},
+      "NVIDIA GeForce RTX 3090": {avg: 0.24, count: 52},
+      "NVIDIA GeForce RTX 4090": {avg: 0.44, count: 31},
+      "NVIDIA GeForce RTX 5080": {avg: 0.39, count: 18},
       "NVIDIA GeForce RTX 5070": {avg: 0.19, count: 8},
       "NVIDIA H100 80GB HBM3":   {avg: 0.12, count: 8},
       "NVIDIA GeForce RTX 4070": {avg: 0.23, count: 7},
@@ -109,7 +109,7 @@
     var idleDay   = num("c-idle");         // USD/day per GPU from idle mining fallback
     var powerW    = num("c-power");        // watts per GPU
     var elecRate  = num("c-elec");         // USD per kWh
-    var octaPrice = window.OCTA_PRICE || liveMarketPrice || 0.1151; // last-resort literal mirrors js/app.js FALLBACK (re-synced 2026-10-02 ~09:50 UTC) — re-sync if app.js FALLBACK changes
+    var octaPrice = window.OCTA_PRICE || liveMarketPrice || 0.1155; // last-resort literal mirrors js/app.js FALLBACK (re-synced 2026-10-02 ~11:50 UTC) — re-sync if app.js FALLBACK changes
 
     var hrsMonth = 730;
     var rentedHrs = hrsMonth * (util/100);
