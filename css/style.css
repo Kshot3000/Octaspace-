@@ -39,6 +39,13 @@ body::before{
 #fx-bg{position:fixed;inset:0;z-index:-2;pointer-events:none}
 a{color:var(--brand-lt);text-decoration:none}
 a:hover{text-decoration:underline}
+/* long-token guard: unbreakable strings in prose (contract addresses, bare
+   URLs used as link text) must wrap instead of expanding the page on narrow
+   phones — found 2026-10-02: the RFC changelog's bare 42-char copycat address
+   forced a 405px-wide layout at every phone width, and build.html's
+   whitepaper URL link text overflowed its card at 320px. overflow-wrap only
+   engages when a single token exceeds the line, so normal prose is untouched. */
+main p,main li,main a{overflow-wrap:anywhere}
 /* accessibility: skip link (first Tab stop) + visible focus for all interactive elements */
 .skip{position:absolute;left:16px;top:-48px;z-index:100;background:#1a0530;color:#fff;
   font-weight:700;font-size:.9rem;padding:10px 18px;border-radius:10px;
