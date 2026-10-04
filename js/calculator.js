@@ -22,23 +22,23 @@
 
 
   // Baked marketplace snapshot so the GPU prefill works even if the live API
-  // is unreachable. Captured from https://api.octa.computer/network 2026-10-04T22:53Z
+  // is unreachable. Captured from https://api.octa.computer/network 2026-10-04T23:51Z
   // (mirrors the js/market.js baked fallback — keep the two in sync; verified
   // identical to live across three identical reads at capture time).
   // NOTE: this copy had drifted to the older 11:50 UTC snapshot (5090 count 63,
   // 3090 count 52, 5080 $0.39/18) while market.js had moved to 15:54 — fixed 2026-10-02.
   var MARKETPLACE_FALLBACK = {
-    captured: "2026-10-04 22:53 UTC",
+    captured: "2026-10-04 23:51 UTC",
     live: false,
     gpus: {
-      "NVIDIA GeForce RTX 5090": {avg: 0.65, count: 58},
-      "NVIDIA GeForce RTX 3090": {avg: 0.22, count: 53},
+      "NVIDIA GeForce RTX 5090": {avg: 0.63, count: 63},
+      "NVIDIA GeForce RTX 3090": {avg: 0.22, count: 52},
       "NVIDIA GeForce RTX 4090": {avg: 0.44, count: 32},
-      "NVIDIA GeForce RTX 5080": {avg: 0.40, count: 16},
+      "NVIDIA GeForce RTX 5080": {avg: 0.41, count: 16},
       "NVIDIA GeForce RTX 5070": {avg: 0.18, count: 8},
       "NVIDIA H100 80GB HBM3":   {avg: 0.12, count: 8},
       "NVIDIA GeForce RTX 4070": {avg: 0.23, count: 7},
-      "NVIDIA GeForce RTX 4080": {avg: 0.11, count: 3},
+      "NVIDIA GeForce RTX 4080": {avg: 0.10, count: 3},
       "NVIDIA RTX A6000":        {avg: 0.20, count: 2},
       "NVIDIA A100-SXM4-40GB":   {avg: 0.48, count: 1}
     }
@@ -111,7 +111,7 @@
     var idleDay   = num("c-idle");         // USD/day per GPU from idle mining fallback
     var powerW    = num("c-power");        // watts per GPU
     var elecRate  = num("c-elec");         // USD per kWh
-    var octaPrice = window.OCTA_PRICE || liveMarketPrice || 0.1116; // last-resort literal mirrors js/app.js FALLBACK (re-synced 2026-10-04 ~22:53 UTC) — re-sync if app.js FALLBACK changes
+    var octaPrice = window.OCTA_PRICE || liveMarketPrice || 0.112; // last-resort literal mirrors js/app.js FALLBACK (re-synced 2026-10-04 ~23:51 UTC) — re-sync if app.js FALLBACK changes
 
     var hrsMonth = 730;
     var rentedHrs = hrsMonth * (util/100);
