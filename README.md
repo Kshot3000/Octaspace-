@@ -28,7 +28,7 @@ Community mission control for **OctaSpace** — helping the decentralized GPU cl
 
 1. Honest comparisons that rank and bring renters/providers to OctaSpace
 2. Provider onboarding that lowers the real friction (staking, setup, idle mining)
-3. Upstream code fixes — auditing `github.com/octaspace` repos and opening PRs (11 open from Kshot3000 forks as of 2026-10-04, all mergeable, no CI failures or maintainer changes requested)
+3. Upstream code fixes — auditing `github.com/octaspace` repos and opening PRs (11 open from Kshot3000 forks as of 2026-10-07, all mergeable, no CI failures or maintainer changes requested)
 
 ## Freshness
 
