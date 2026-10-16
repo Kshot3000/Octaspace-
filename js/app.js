@@ -16,7 +16,7 @@
   document.querySelectorAll("[data-year]").forEach(function(el){ el.textContent = new Date().getFullYear(); });
 
   // Live OCTA stats
-  var FALLBACK = { price: 0.0868, mcap: 3793770, vol24h: 2403, change24h: -5.47, note: "cached" }; // price re-synced 2026-10-15 ~16:51 UTC to api.octa.computer market_price ($0.08681484, verified across three identical reads) — mcap recomputed from live circulating supply (43,699,557); vol/change from a fresh CoinGecko pull verified across three identical reads: vol $2,403, change -5.47% at rounded precision (raw vol $2,403.02, change -5.46900%; CG usd $0.085005)
+  var FALLBACK = { price: 0.092, mcap: 4021774, vol24h: 5610, change24h: 9.16, note: "cached" }; // price re-synced 2026-10-16 ~16:51 UTC to api.octa.computer market_price ($0.09203659, verified across three identical reads) — mcap recomputed from live circulating supply (43,697,559); vol/change from a fresh CoinGecko pull verified across three identical reads: vol $5,610, change +9.16% at rounded precision (raw vol $5,610.29, change +9.16073%; CG usd $0.092128)
 
   // fetch() has no built-in timeout: a hung feed (neither resolving nor
   // rejecting) would never reach the .catch fallbacks below. An 8s abort
